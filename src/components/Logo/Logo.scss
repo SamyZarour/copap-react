@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+
+.Logo{
+  display: inline-block;
+  padding: 10px;
+  margin: 5px;
+  font-size: 2em;
+  color: $color-accent;
+  cursor: pointer;
+
+  a {
+    color: $color-accent;
+  }
+
+  a:hover {
+    color: $color-accent;
+    font-weight: bold;
+    text-decoration: none;
+  }
+}

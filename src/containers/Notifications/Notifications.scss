@@ -1,0 +1,42 @@
+.notifications{
+  position: absolute;
+  width: calc(100% - 20px);
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  z-index: 1025;
+}
+
+.notification-enter {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-enter.notification-enter-active {
+  opacity: 1;
+  height: 80px;
+  padding: 20px;
+  margin: 10px;
+  transition: opacity 500ms ease, height 500ms ease, padding 500ms ease, margin 500ms ease;
+}
+
+.notification-leave {
+  opacity: 1;
+  height: 80px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.notification-leave.notification-leave-active {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  transition: opacity 500ms ease, height 500ms ease, padding 500ms ease, margin 500ms ease;
+
+  span{
+    visibility: hidden;
+  }
+}

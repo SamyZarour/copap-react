@@ -1,0 +1,29 @@
+.Navbar{
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  color: black;
+  width: 100%;
+  padding: 10px 25px;
+  display: table;
+}
+
+.nav-item{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.nav-right{
+  float: right;
+
+  span {
+    padding: 10px;
+    margin: 5px;
+    font-weight: bold;
+    border-right: 1px solid black;
+  }
+}
+
+.nav-left{
+  float: left;
+}

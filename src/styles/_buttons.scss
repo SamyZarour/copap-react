@@ -1,0 +1,55 @@
+.successButton {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #42D08A;
+  width: 100%;
+  padding: 15px;
+  margin: 15px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid #42D08A;
+  transition: all 0.5s ease;
+
+  &:hover:enabled, &:active:enabled, &:focus:enabled {
+    color: #42D08A;
+    background: white;
+  }
+}
+
+.addButton {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #000;
+  width: 25px;
+  height: 25px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 100%;
+  transition: all 0.5s ease;
+}
+
+.cancelButton {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #CCC;
+  width: 100%;
+  padding: 15px;
+  margin: 15px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid #CCC;
+  transition: all 0.5s ease;
+
+  &:hover:enabled, &:active:enabled, &:focus:enabled {
+    color: #CCC;
+    background: white;
+  }
+}

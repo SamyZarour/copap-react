@@ -1,0 +1,19 @@
+.Clickable{
+  display: inline-block;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: black;
+  background: none;
+  border: none;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline:0;
+  }
+}

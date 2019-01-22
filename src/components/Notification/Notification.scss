@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+
+.notification{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 20px;
+  margin: 10px;
+  height: 80px;
+  line-height: 40px;
+  background-color: #f44336;
+  border-radius: 10px;
+  text-transform: capitalize;
+}
