@@ -5,7 +5,7 @@ import './Logo.scss';
 
 const Logo = () => (
     <div className="Logo">
-        <Link to="/">Authentication App</Link>
+        <Link to="/">Copap</Link>
     </div>
 );
 

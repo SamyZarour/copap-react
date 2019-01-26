@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Logo from '../Logo';
-import ButtonSignIn from '../ButtonSignIn';
-import ButtonSignUp from '../ButtonSignUp';
 import ButtonSignOut from '../ButtonSignOut';
 import { getToken, checkNested } from '../../utils';
 import './Navbar.scss';
@@ -19,8 +17,6 @@ const Navbar = props => (
         <div className="nav-item">
             <div className="nav-right">
                 { getToken() && checkNested(props, 'username') && <span className="navUsername"> {props.username} </span> }
-                { !getToken() && <ButtonSignIn /> }
-                { !getToken() && <ButtonSignUp /> }
                 { getToken() && <ButtonSignOut /> }
             </div>
         </div>

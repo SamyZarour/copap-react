@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
@@ -52,13 +51,11 @@ const SignInForm = props => {
 
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <h2 className="title">Login</h2>
             <div className="fields">
                 <Field name="email" type="email" label="Email" component={renderField} autocomplete="email" />
                 <Field name="password" type="password" label="Password" component={renderField} />
             </div>
             <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Login { submitting && <Spinner />}</button>
-            <p className="message">Not registered? <Link to="/register">Create an account</Link></p>
         </form>
     );
 };

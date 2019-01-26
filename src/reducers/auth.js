@@ -41,11 +41,6 @@ export default (state = defaultState, action) => {
                 isBusy: false,
                 isFetched: true
             };
-        case CONSTANTS.REGISTER_SUCCESS:
-            return {
-                ...state,
-                ...action.payload
-            };
         case CONSTANTS.REGISTER_FAILURE:
             return {
                 ...state,

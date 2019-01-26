@@ -1,5 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+import { reset } from 'redux-form';
 import { TOKEN_KEY, checkNested, getColorFromHTTPCode } from '../utils';
 import {
     LOGIN,
@@ -46,9 +47,10 @@ export function* loginAsync(action) {
 export function* registerAsync(action) {
     try {
         yield put(ACTIONS.registerRequest());
-        const response = yield call(API.register, action.payload);
-        localStorage.setItem(TOKEN_KEY, response.data.user.token);
-        yield put(ACTIONS.registerSuccess(response.data));
+        yield call(API.register, action.payload);
+        yield put(ACTIONS_MODAL.createModal('Successfully created user', getColorFromHTTPCode(200), 3000));
+        yield put(reset('SignUpForm'));
+        yield put(ACTIONS.registerSuccess());
     } catch (e) {
         yield put(ACTIONS.registerFailure(e));
         const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';

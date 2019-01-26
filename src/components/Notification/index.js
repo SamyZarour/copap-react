@@ -5,7 +5,8 @@ import './Notification.scss';
 const Notification = props => (
     <div className="notification" style={props.style}>
         <span>{props.message}</span>
-    </div>);
+    </div>
+);
 
 Notification.propTypes = {
     message: PropTypes.string.isRequired,

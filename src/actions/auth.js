@@ -8,7 +8,7 @@ export const loginDone = () => ({ type: CONSTANTS.LOGIN_DONE, payload: false });
 
 export const register = user => ({ type: CONSTANTS.REGISTER, payload: user });
 export const registerRequest = () => ({ type: CONSTANTS.REGISTER_REQUEST, payload: true });
-export const registerSuccess = user => ({ type: CONSTANTS.REGISTER_SUCCESS, payload: user });
+export const registerSuccess = () => ({ type: CONSTANTS.REGISTER_SUCCESS });
 export const registerFailure = error => ({ type: CONSTANTS.REGISTER_FAILURE, payload: error });
 export const registerDone = () => ({ type: CONSTANTS.REGISTER_DONE, payload: false });
 

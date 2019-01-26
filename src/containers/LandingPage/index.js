@@ -1,11 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import * as ACTIONS from '../../actions/auth';
+import SignInForm from '../../components/SignInForm';
 import './LandingPage.scss';
 
-const LandingPage = () => (
-    <div className="LandingPage">
-        Welcome to Auth App please <Link to="/login">Login</Link> or <Link to="/register">Register</Link>!
-    </div>
-);
+class LandingPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
-export default LandingPage;
+    handleSubmit(values) {
+        const { email, password } = values;
+        this.props.login(email, password);
+    }
+
+    render() {
+        return (
+            <div className="LandingPage">
+                <img src="/icons/logo_copap.gif" alt="Copap Inc" />
+                <SignInForm onSubmit={this.handleSubmit} />
+            </div>
+        );
+    }
+}
+const mapDispatchToProps = dispatch => ({
+    login: (email, password) => dispatch(ACTIONS.login({ email, password }))
+});
+
+LandingPage.propTypes = {
+    login: PropTypes.func.isRequired
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(LandingPage));
