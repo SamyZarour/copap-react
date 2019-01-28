@@ -18,8 +18,8 @@ const test = {
 
 // Prod Configs
 const production = {
-    url: process.env.URL,
-    url_sql: 'http://copap.localtunnel.me'
+    url: process.env.REACT_APP_API_URL,
+    url_sql: process.env.REACT_APP_SQL_URL
 };
 
 // Core configs
