@@ -1,3 +1,17 @@
 body{
   font-family: Raleway, sans-serif;
+
+  .rows{
+    display: flex;
+    flex-direction: column;
+
+    .row{
+      display: flex;
+      flex-direction: row;
+
+      .column{
+        flex: 1;
+      }
+    }
+  }
 }

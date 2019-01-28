@@ -6,17 +6,20 @@ const env = process.env.NODE_ENV;
 
 // Dev Configs
 const development = {
-    url: process.env.REACT_APP_DEV_DB_URL || 'http://localhost:3000'
+    url: process.env.REACT_APP_DEV_DB_URL || 'http://localhost:3000',
+    url_sql: 'http://copap.localtunnel.me'
 };
 
 // Test Configs
 const test = {
-    url: process.env.REACT_APP_TEST_DB_URL || 'http://localhost:3000'
+    url: process.env.REACT_APP_TEST_DB_URL || 'http://localhost:3000',
+    url_sql: 'http://copap.localtunnel.me'
 };
 
 // Prod Configs
 const production = {
-    url: process.env.URL
+    url: process.env.URL,
+    url_sql: 'http://copap.localtunnel.me'
 };
 
 // Core configs

@@ -5,7 +5,7 @@ import './Logo.scss';
 
 const Logo = () => (
     <div className="Logo">
-        <Link to="/">Copap</Link>
+        <Link to="/"><img src="/icons/logo_copap.gif" alt="Copap Inc" /></Link>
     </div>
 );
 

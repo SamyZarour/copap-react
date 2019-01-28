@@ -1,4 +1,14 @@
 .HomePage{
   text-align: center;
   font-size: 2em;
+
+  .search{
+    margin-bottom: 50px;
+  }
+
+  .spinner{
+    width: 100px;
+    height: 100px;
+    margin: auto;
+  }
 }

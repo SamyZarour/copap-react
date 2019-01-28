@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import common from './common';
 import auth from './auth';
 import modal from './modal';
+import invoices from './invoices';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
     form: formReducer,
     common,
     auth,
-    modal
+    modal,
+    invoices
 });

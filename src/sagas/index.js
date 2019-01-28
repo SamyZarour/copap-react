@@ -1,6 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 import auth from './auth';
 import modal from './modal';
+import invoices from './invoices';
 
 function startSagas(sagas) {
     return function* rootSaga() {
@@ -10,7 +11,8 @@ function startSagas(sagas) {
 
 const sagas = [
     ...auth,
-    ...modal
+    ...modal,
+    ...invoices
 ];
 
 export default startSagas(sagas);

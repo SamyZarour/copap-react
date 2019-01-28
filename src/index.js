@@ -6,6 +6,7 @@ import store from './store';
 import { history } from './history';
 import App from './containers/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
 import './styles/index.scss';
 
 ReactDOM.render((
