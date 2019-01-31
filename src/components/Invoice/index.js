@@ -5,85 +5,101 @@ import './Invoice.scss';
 
 
 const Invoice = ({
-    PayableID,
     Client,
-    Commission1,
+    Commission,
     DueDate,
-    InvoiceNumber,
+    InvoiceNo,
     OrderDate,
-    PricePerUnitBuy,
-    PricePerUnitSale,
+    PriceBuy,
+    PriceUomBuy,
+    CurrencyBuy,
+    PriceSale,
+    PriceUomSale,
+    CurrencySale,
     ProductType,
-    QTY,
-    SalesPriceSale,
-    Supplier
+    Qty,
+    QtyUom,
+    TotalSale,
+    Supplier,
+    SalesRep,
+    ContactPoint
 }) => (
     <div className="Invoice">
         <div className="rows">
             <div className="row head">
-                Payable ID : {PayableID}
+                Invoice No : {InvoiceNo}
             </div>
             <div className="row">
                 <div className="column label">Client</div>
                 <div className="column value">{Client}</div>
             </div>
             <div className="row">
-                <div className="column label">Commission</div>
-                <div className="column value">{Commission1}</div>
-            </div>
-            <div className="row">
-                <div className="column label">Due Date</div>
-                <div className="column value">{moment(DueDate).format('YYYY-MM-DD')}</div>
-            </div>
-            <div className="row">
-                <div className="column label">Invoice Number</div>
-                <div className="column value">{InvoiceNumber}</div>
-            </div>
-            <div className="row">
                 <div className="column label">Order Date</div>
                 <div className="column value">{moment(OrderDate).format('YYYY-MM-DD')}</div>
-            </div>
-            <div className="row">
-                <div className="column label">Price Per Unit (Buy)</div>
-                <div className="column value">{PricePerUnitBuy}</div>
-            </div>
-            <div className="row">
-                <div className="column label">Price Per Unit Sale</div>
-                <div className="column value">{PricePerUnitSale}</div>
             </div>
             <div className="row">
                 <div className="column label">Product Type</div>
                 <div className="column value">{ProductType}</div>
             </div>
             <div className="row">
-                <div className="column label">QTY</div>
-                <div className="column value">{QTY}</div>
-            </div>
-            <div className="row">
-                <div className="column label">Sales Price Sale</div>
-                <div className="column value">{SalesPriceSale}</div>
-            </div>
-            <div className="row">
                 <div className="column label">Supplier</div>
                 <div className="column value">{Supplier}</div>
+            </div>
+            <div className="row">
+                <div className="column label">QTY</div>
+                <div className="column value">{Qty} {QtyUom || ''}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Sales Price</div>
+                <div className="column value">{TotalSale} {PriceUomSale || ''}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Sales Price Per Unit</div>
+                <div className="column value">{PriceSale} {PriceUomSale || ''} {CurrencySale || ''}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Buying Price Per Unit</div>
+                <div className="column value">{PriceBuy} {PriceUomBuy || ''} {CurrencyBuy || ''}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Due Date</div>
+                <div className="column value">{moment(DueDate).format('YYYY-MM-DD')}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Commission</div>
+                <div className="column value">{Commission}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Sales Rep</div>
+                <div className="column value">{SalesRep}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Contact Point</div>
+                <div className="column value">{ContactPoint}</div>
             </div>
         </div>
     </div>
 );
 
 Invoice.propTypes = {
-    PayableID: PropTypes.number.isRequired,
+    InvoiceNo: PropTypes.string.isRequired,
     Client: PropTypes.string.isRequired,
-    Commission1: PropTypes.number.isRequired,
+    Commission: PropTypes.number.isRequired,
     DueDate: PropTypes.string.isRequired,
-    InvoiceNumber: PropTypes.string.isRequired,
     OrderDate: PropTypes.string.isRequired,
-    PricePerUnitBuy: PropTypes.string.isRequired,
-    PricePerUnitSale: PropTypes.string.isRequired,
+    PriceSale: PropTypes.number.isRequired,
+    PriceUomSale: PropTypes.string.isRequired,
+    CurrencySale: PropTypes.string.isRequired,
+    PriceBuy: PropTypes.number.isRequired,
+    PriceUomBuy: PropTypes.string.isRequired,
+    CurrencyBuy: PropTypes.string.isRequired,
     ProductType: PropTypes.string.isRequired,
-    QTY: PropTypes.number.isRequired,
-    SalesPriceSale: PropTypes.number.isRequired,
-    Supplier: PropTypes.string.isRequired
+    Qty: PropTypes.number.isRequired,
+    QtyUom: PropTypes.string.isRequired,
+    TotalSale: PropTypes.number.isRequired,
+    Supplier: PropTypes.string.isRequired,
+    SalesRep: PropTypes.string.isRequired,
+    ContactPoint: PropTypes.string.isRequired
 };
 
 export default Invoice;

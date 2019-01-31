@@ -10,10 +10,18 @@
     display: flex;
     justify-content: center;
 
-    .fa-search{
-      padding: 10px 15px;
-      margin-right: 10px;
+    .searchIcon{
+      display: flex;
+      width: 60px;
+      justify-content: center;
+      align-items: center;
       border-right: 1px solid black;
+      margin-right: 10px;
+
+      .fa-search{
+        padding: 10px;
+        height: 45px;
+      }
     }
 
     input {

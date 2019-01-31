@@ -15,7 +15,9 @@ class Search extends Component {
         return (
             <div className="search">
                 <div className="searchBar">
-                    <li className="fa fa-search" />
+                    <div className="searchIcon">
+                        <li className="fa fa-search" />
+                    </div>
                     <input
                         className="searchInput"
                         type="text"
