@@ -16,9 +16,9 @@ export function* fetchInvoicesAsync(action) {
     try {
         yield delay(1000);
         yield put(ACTIONS.fetchInvoicesRequest());
-        yield put(ACTIONS.resetInvoices());
-        const response = yield call(API.getInvoices, action.payload);
-        yield put(ACTIONS.fetchInvoicesSuccess(response.data));
+        const response = yield call(API.getInvoices, { ...action.payload, pageSize: CONSTANTS.INVOICE_PAGE_SIZE });
+        const isEnd = response.data && response.data.recordset && response.data.recordset.length < CONSTANTS.INVOICE_PAGE_SIZE;
+        yield put(ACTIONS.fetchInvoicesSuccess({ ...response.data, isEnd }));
     } catch (e) {
         yield put(ACTIONS.fetchInvoicesFailure(e));
         if (checkNested(e, 'response', 'status') && e.response.status === 401) { yield put(ACTIONS_AUTH.logout()); }

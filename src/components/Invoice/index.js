@@ -5,6 +5,7 @@ import './Invoice.scss';
 
 
 const Invoice = ({
+    id,
     Client,
     Commission,
     DueDate,
@@ -25,6 +26,7 @@ const Invoice = ({
     ContactPoint
 }) => (
     <div className="Invoice">
+        { console.log(id) }
         <div className="rows">
             <div className="row head">
                 Invoice No : {InvoiceNo}
@@ -82,6 +84,7 @@ const Invoice = ({
 );
 
 Invoice.propTypes = {
+    id: PropTypes.string.isRequired,
     InvoiceNo: PropTypes.string.isRequired,
     Client: PropTypes.string.isRequired,
     Commission: PropTypes.number.isRequired,

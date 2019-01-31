@@ -11,8 +11,7 @@ export default (state = defaultState, action) => {
     switch (action.type) {
         case CONSTANTS.RESET_INVOICES:
             return {
-                ...defaultState,
-                isBusy: state.isBusy
+                ...defaultState
             };
         case CONSTANTS.FETCH_INVOICES_REQUEST:
             return {
@@ -28,7 +27,7 @@ export default (state = defaultState, action) => {
         case CONSTANTS.FETCH_INVOICES_SUCCESS:
             return {
                 ...state,
-                invoices: action.payload.recordset || [],
+                invoices: [...state.invoices, ...action.payload.recordset],
                 isEnd: action.payload.isEnd || false
             };
         case CONSTANTS.FETCH_INVOICES_FAILURE:
