@@ -7,13 +7,13 @@ const env = process.env.NODE_ENV;
 // Dev Configs
 const development = {
     url: process.env.REACT_APP_DEV_DB_URL || 'http://localhost:3000',
-    url_sql: process.env.REACT_APP_SQL_URL || 'https://copap.localtunnel.me'
+    url_sql: process.env.REACT_APP_SQL_URL || 'http://2503f7e9.ngrok.io'
 };
 
 // Test Configs
 const test = {
     url: process.env.REACT_APP_TEST_DB_URL || 'http://localhost:3000',
-    url_sql: process.env.REACT_APP_SQL_URL || 'https://copap.localtunnel.me'
+    url_sql: process.env.REACT_APP_SQL_URL || 'http://2503f7e9.ngrok.io'
 };
 
 // Prod Configs

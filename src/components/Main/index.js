@@ -8,6 +8,7 @@ import HomePage from '../../containers/HomePage';
 import SignUpPage from '../../containers/SignUpPage';
 import Notifications from '../../containers/Notifications';
 import LandingPage from '../../containers/LandingPage';
+import BrandSearchPage from '../../containers/BrandSearchPage';
 import NotFound from '../NotFound';
 
 import './Main.scss';
@@ -18,6 +19,7 @@ const Main = props => (
         <main className="Main">
             <Switch>
                 <Route exact path="/" render={() => props.user ? <HomePage /> : <LandingPage />} />
+                <Route exact path="/brand" render={() => props.user ? <BrandSearchPage /> : <LandingPage />} />
                 <Route exact path="/admin" render={() => (props.user && props.user.role === 'admin') ? <SignUpPage /> : <Redirect to="/" />} />
                 <Route component={NotFound} />
             </Switch>

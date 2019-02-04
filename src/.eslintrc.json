@@ -40,13 +40,8 @@
     "jsx-a11y/heading-has-content": 0,
     "jsx-a11y/role-has-required-aria-props": 1,
     "jsx-a11y/role-supports-aria-props": 1,
-    "jsx-a11y/label-has-for": [ 2, {
-      "components": [ "Label" ],
-      "required": {
-        "every": [ "id" ]
-      },
-      "allowChildren": false
-    }],
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/label-has-for": 0,
     "object-curly-newline": 0,
     "max-len": 0,
     "newline-per-chained-call": 0,

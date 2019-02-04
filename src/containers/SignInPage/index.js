@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as ACTIONS from '../../actions/auth';
-import SignInForm from '../../components/SignInForm';
+import SignInForm from '../../forms/SignInForm';
 
 class SignInPage extends React.Component {
     constructor(props) {

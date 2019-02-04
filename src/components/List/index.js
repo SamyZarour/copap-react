@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
+import './style.scss';
 
 class List extends Component {
     constructor(props) {
@@ -34,7 +35,7 @@ class List extends Component {
                     })()
                 }
                 { isBusy && <Spinner /> }
-                { isEnd && <div>No more Items</div>}
+                { isEnd && <div className="noMoreItems">No more Items</div>}
             </div>
         );
     }

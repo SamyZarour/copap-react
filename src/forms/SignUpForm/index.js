@@ -1,7 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import Spinner from '../Spinner';
+import { renderField } from '../utils';
+import Spinner from '../../components/Spinner/index';
 
 
 const validate = values => {
@@ -34,26 +35,6 @@ const warn = values => {
         warnings.password = 'Hmm, this is a bit short...';
     }
     return warnings;
-};
-
-const renderField = config => {
-    const {
-        input,
-        label,
-        type,
-        meta: {
-            touched,
-            error,
-            warning
-        }
-    } = config;
-
-    return (
-        <div className="field">
-            <input {...input} placeholder={label} type={type} />
-            {touched && ((error && <span className="error">{error}</span>) || (warning && <span className="warning">{warning}</span>))}
-        </div>
-    );
 };
 
 const SignUpForm = props => {

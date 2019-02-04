@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import common from './common';
 import auth from './auth';
 import modal from './modal';
+import search from './search';
 import invoices from './invoices';
 
 
@@ -13,5 +14,6 @@ export default combineReducers({
     common,
     auth,
     modal,
+    search,
     invoices
 });
