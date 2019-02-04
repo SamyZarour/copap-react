@@ -31,6 +31,7 @@ export const renderField = config => {
 export const renderFieldSelect = config => {
     const {
         input,
+        onChange,
         isRequired,
         options,
         label,
@@ -96,7 +97,7 @@ export const renderFieldSelect = config => {
                 placeholder={placeholder || ''}
                 options={options}
                 value={input.value && options.find(option => option.value === input.value)}
-                onChange={value => input.onChange(value.value)}
+                onChange={value => onChange ? onChange(value) : input.onChange(value.value)}
                 onBlur={value => input.onBlur(value.value)}
                 styles={customStyles}
                 isDisabled={readOnly}

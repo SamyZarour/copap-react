@@ -45,7 +45,7 @@ const SearchBrandForm = props => {
     } = props;
 
     return (
-        <div className="IndexForm">
+        <div className="SearchBrandForm">
             <form className="form" onSubmit={handleSubmit}>
                 <div className="fields">
                     <Field name="productType" placeholder="Select..." type="text" label="Product Type" component={renderFieldSelect} options={productTypes} autocomplete="productType" />

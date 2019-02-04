@@ -30,6 +30,7 @@ class BrandSearchPage extends Component {
     }
 
     setBrand(brand) {
+        console.log(brand);
         this.setState(brand);
     }
 
@@ -37,7 +38,8 @@ class BrandSearchPage extends Component {
         this.props.resetInvoices();
         const newState = { ...this.state, ...criteria, page: 0 };
         this.setState(newState);
-        this.props.fetchInvoices(newState);
+        const query = { ...newState, isAdmin: this.props.user.role === 'admin' };
+        this.props.fetchInvoices(query);
     }
 
     getNextPage() {
@@ -55,7 +57,8 @@ class BrandSearchPage extends Component {
                         (
                             <div>
                                 <h1>{brands.find(brand => brand.value === this.state.brand).label}</h1>
-                                <SearchBrandForm onSubmit={this.setSearchCriteria} customers={customers} productTypes={productTypes} /> :
+                                <button type="button" className="cancelButton" onClick={() => this.setBrand({ brand: undefined })}>Change Brand</button>
+                                <SearchBrandForm onSubmit={this.setSearchCriteria} customers={customers} productTypes={productTypes} />
                                 <List isEnd={isEnd} isBusy={isBusy} list={invoices} ListItem={Invoice} onPaginatedSearch={this.getNextPage} />
                             </div>
                         ) :
@@ -84,7 +87,8 @@ const mapDispatchToProps = dispatch => ({
 
 BrandSearchPage.propTypes = {
     user: PropTypes.shape({
-        username: PropTypes.string.isRequired
+        username: PropTypes.string.isRequired,
+        role: PropTypes.string
     }).isRequired,
     fetchBrands: PropTypes.func.isRequired,
     fetchCustomers: PropTypes.func.isRequired,

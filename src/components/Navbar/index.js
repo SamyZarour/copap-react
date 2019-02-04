@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Logo from '../Logo';
 import ButtonSignOut from '../ButtonSignOut';
 import { getToken, checkNested } from '../../utils';
@@ -11,6 +12,12 @@ const Navbar = props => (
         <div className="nav-item">
             <div className="nav-left">
                 <Logo />
+                <div className="nav-element">
+                    <Link className="nav-link" to="/brand">Brand</Link>
+                </div>
+                <div className="nav-element">
+                    <Link className="nav-link" to="/customer">Customer</Link>
+                </div>
             </div>
         </div>
 

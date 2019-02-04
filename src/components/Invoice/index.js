@@ -57,10 +57,12 @@ const Invoice = ({
                 <div className="column label">Sales Price Per Unit</div>
                 <div className="column value">{PriceSale} {PriceUomSale || ''} {CurrencySale || ''}</div>
             </div>
-            <div className="row">
-                <div className="column label">Buying Price Per Unit</div>
-                <div className="column value">{PriceBuy} {PriceUomBuy || ''} {CurrencyBuy || ''}</div>
-            </div>
+            { PriceBuy && PriceUomBuy && CurrencyBuy && (
+                <div className="row">
+                    <div className="column label">Buying Price Per Unit</div>
+                    <div className="column value">{PriceBuy} {PriceUomBuy || ''} {CurrencyBuy || ''}</div>
+                </div>
+            )}
             <div className="row">
                 <div className="column label">Due Date</div>
                 <div className="column value">{moment(DueDate).format('YYYY-MM-DD')}</div>
@@ -90,9 +92,9 @@ Invoice.propTypes = {
     PriceSale: PropTypes.number.isRequired,
     PriceUomSale: PropTypes.string.isRequired,
     CurrencySale: PropTypes.string.isRequired,
-    PriceBuy: PropTypes.number.isRequired,
-    PriceUomBuy: PropTypes.string.isRequired,
-    CurrencyBuy: PropTypes.string.isRequired,
+    PriceBuy: PropTypes.number,
+    PriceUomBuy: PropTypes.string,
+    CurrencyBuy: PropTypes.string,
     ProductType: PropTypes.string.isRequired,
     Qty: PropTypes.number.isRequired,
     QtyUom: PropTypes.string.isRequired,

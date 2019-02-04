@@ -13,6 +13,19 @@
   vertical-align: middle;
 }
 
+.nav-element{
+  display: inline-block;
+
+  a{
+    color: black;
+
+    &:hover{
+      color: black;
+      text-decoration: underline;
+    }
+  }
+}
+
 .nav-right{
   float: right;
 

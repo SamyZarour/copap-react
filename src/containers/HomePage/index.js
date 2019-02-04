@@ -32,7 +32,8 @@ class HomePage extends Component {
         this.props.resetInvoices();
         const newState = { page: 0, ...criteria };
         this.setState(newState);
-        this.props.fetchInvoices(newState);
+        const query = { ...newState, isAdmin: this.props.user.role === 'admin' };
+        this.props.fetchInvoices(query);
     }
 
     getNextPage() {
@@ -72,7 +73,8 @@ const mapDispatchToProps = dispatch => ({
 
 HomePage.propTypes = {
     user: PropTypes.shape({
-        username: PropTypes.string.isRequired
+        username: PropTypes.string.isRequired,
+        role: PropTypes.string
     }).isRequired,
     fetchBrands: PropTypes.func.isRequired,
     fetchCustomers: PropTypes.func.isRequired,
