@@ -56,31 +56,37 @@ class CustomerSearchPage extends Component {
                                 <h1>{customers.length > 0 && customers.find(c => c.value === customer).label}</h1>
                                 <button type="button" className="cancelButton" onClick={() => this.setCustomer({ customer: undefined })}>Change Customer</button>
                                 <SearchCustomerForm onSubmit={this.setSearchCriteria} customers={customers} productTypes={productTypes} />
-                                <Select isMulti placeholder="Select Invoices..." onChange={this.setInvoices} value={selectedInvoices} closeMenuOnSelect={false} options={invoices} />
-                                { selectedInvoices.length > 0 ?
+                                { invoices.length > 0 &&
                                     (
                                         <div>
-                                            <div className="pieChartLegend">
-                                                { selectedInvoices.map(item => (
-                                                    <div className="pieChartItem">
-                                                        <div className="pieChartItemColor" style={({ backgroundColor: item.color })} />
-                                                        <div className="pieChartItemLabel">{item.title}</div>
+                                            <Select isMulti placeholder="Select Invoices..." onChange={this.setInvoices} value={selectedInvoices} closeMenuOnSelect={false} options={invoices} />
+                                            { selectedInvoices.length > 0 ?
+                                                (
+                                                    <div>
+                                                        <div className="pieChartLegend">
+                                                            { selectedInvoices.map(item => (
+                                                                <div className="pieChartItem">
+                                                                    <div className="pieChartItemColor" style={({ backgroundColor: item.color })} />
+                                                                    <div className="pieChartItemLabel">{item.title}</div>
+                                                                </div>
+                                                            )) }
+                                                        </div>
+                                                        <PieChart className="pieChart" data={selectedInvoices} />
                                                     </div>
-                                                )) }
-                                            </div>
-                                            <PieChart className="pieChart" data={selectedInvoices} />
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <div className="pieChartLegend">
-                                                { [{ title: 'Blank', value: 1, color: '#757575' }].map(item => (
-                                                    <div className="pieChartItem">
-                                                        <div className="pieChartItemColor" style={({ backgroundColor: item.color })} />
-                                                        <div className="pieChartItemLabel">{item.title}</div>
+                                                ) : (
+                                                    <div>
+                                                        <div className="pieChartLegend">
+                                                            { [{ title: 'Blank', value: 1, color: '#757575' }].map(item => (
+                                                                <div className="pieChartItem">
+                                                                    <div className="pieChartItemColor" style={({ backgroundColor: item.color })} />
+                                                                    <div className="pieChartItemLabel">{item.title}</div>
+                                                                </div>
+                                                            )) }
+                                                        </div>
+                                                        <PieChart className="pieChart" data={[{ title: 'Blank', value: 1, color: '#757575' }]} />
                                                     </div>
-                                                )) }
-                                            </div>
-                                            <PieChart className="pieChart" data={[{ title: 'Blank', value: 1, color: '#757575' }]} />
+                                                )
+                                            }
                                         </div>
                                     )
                                 }
