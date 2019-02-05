@@ -17,7 +17,6 @@ class HomePage extends Component {
         super(props);
         this.setSearchCriteria = this.setSearchCriteria.bind(this);
         this.getNextPage = this.getNextPage.bind(this);
-        this.state = { page: 0 };
     }
 
     componentWillMount() {
@@ -29,24 +28,25 @@ class HomePage extends Component {
     }
 
     setSearchCriteria(criteria) {
+        const { invoices: { page }, user: { role } } = this.props;
+
         this.props.resetInvoices();
-        const newState = { page: 0, ...criteria };
-        this.setState(newState);
-        const query = { ...newState, isAdmin: this.props.user.role === 'admin' };
+        this.setState(criteria);
+        const query = { ...criteria, isAdmin: role === 'admin', page: page + 1 };
         this.props.fetchInvoices(query);
     }
 
     getNextPage() {
-        const newState = { ...this.state, page: this.state.page + 1 };
-        this.setState(newState);
-        this.props.fetchInvoices(newState);
+        const { invoices: { page }, user: { role } } = this.props;
+        this.props.fetchInvoices({ ...this.state, isAdmin: role === 'admin', page: page + 1 });
     }
 
     render() {
-        const { invoices: { invoices, isBusy, isEnd }, brands, customers, destinationCountries, productTypes } = this.props;
+        const { invoices: { invoices, totalCount, isBusy, isEnd }, brands, customers, destinationCountries, productTypes } = this.props;
         return (
             <div className="HomePage">
                 <SearchIndexForm onSubmit={this.setSearchCriteria} brands={brands} customers={customers} destinationCountries={destinationCountries} productTypes={productTypes} />
+                { invoices.length > 0 && <h3>Found {totalCount} Invoices</h3> }
                 <List isEnd={isEnd} isBusy={isBusy} list={invoices} ListItem={Invoice} onPaginatedSearch={this.getNextPage} />
             </div>
         );

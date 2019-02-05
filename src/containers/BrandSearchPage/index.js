@@ -19,7 +19,7 @@ class BrandSearchPage extends Component {
         this.setBrand = this.setBrand.bind(this);
         this.setSearchCriteria = this.setSearchCriteria.bind(this);
         this.getNextPage = this.getNextPage.bind(this);
-        this.state = { page: 0 };
+        this.state = {};
     }
 
     componentWillMount() {
@@ -30,35 +30,37 @@ class BrandSearchPage extends Component {
     }
 
     setBrand(brand) {
-        console.log(brand);
         this.setState(brand);
     }
 
     setSearchCriteria(criteria) {
+        const { invoices: { page }, user: { role } } = this.props;
+
         this.props.resetInvoices();
-        const newState = { ...this.state, ...criteria, page: 0 };
+        const newState = { ...this.state, ...criteria };
         this.setState(newState);
-        const query = { ...newState, isAdmin: this.props.user.role === 'admin' };
+
+        const query = { ...newState, isAdmin: role === 'admin', page: page + 1 };
         this.props.fetchInvoices(query);
     }
 
     getNextPage() {
-        const newState = { ...this.state, page: this.state.page + 1 };
-        this.setState(newState);
-        this.props.fetchInvoices(newState);
+        const { invoices: { page }, user: { role } } = this.props;
+        this.props.fetchInvoices({ ...this.state, isAdmin: role === 'admin', page: page + 1 });
     }
 
     render() {
-        const { invoices: { invoices, isBusy, isEnd }, brands, customers, productTypes } = this.props;
+        const { invoices: { invoices, totalCount, isBusy, isEnd }, brands, customers, productTypes } = this.props;
         return (
             <div className="BrandSearchPage">
                 {
                     this.state.brand ?
                         (
                             <div>
-                                <h1>{brands.find(brand => brand.value === this.state.brand).label}</h1>
+                                <h1>{brands.length > 0 && brands.find(brand => brand.value === this.state.brand).label}</h1>
                                 <button type="button" className="cancelButton" onClick={() => this.setBrand({ brand: undefined })}>Change Brand</button>
                                 <SearchBrandForm onSubmit={this.setSearchCriteria} customers={customers} productTypes={productTypes} />
+                                { invoices.length > 0 && <h3>Found {totalCount} Invoices</h3> }
                                 <List isEnd={isEnd} isBusy={isBusy} list={invoices} ListItem={Invoice} onPaginatedSearch={this.getNextPage} />
                             </div>
                         ) :

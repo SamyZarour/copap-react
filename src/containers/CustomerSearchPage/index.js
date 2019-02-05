@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import PieChart from 'react-minimal-pie-chart';
 import { userSelector } from '../../selectors/auth';
-import { invoiceListPieChartSelector } from '../../selectors/invoices';
+import { invoiceListPieChartSelector, invoiceTotalCountSelector } from '../../selectors/invoices';
 import { customersSelector, productTypesSelector } from '../../selectors/search';
 import * as ACTIONS from '../../actions/invoices';
 import * as ACTIONS_SEARCH from '../../actions/search';
@@ -45,7 +45,7 @@ class CustomerSearchPage extends Component {
     }
 
     render() {
-        const { invoices, customers, productTypes } = this.props;
+        const { invoices, totalCount, customers, productTypes } = this.props;
         const { customer, selectedInvoices } = this.state;
         return (
             <div className="CustomerSearchPage">
@@ -63,6 +63,7 @@ class CustomerSearchPage extends Component {
                                             { selectedInvoices.length > 0 ?
                                                 (
                                                     <div>
+                                                        <h3>Found {totalCount} Invoices</h3>
                                                         <div className="pieChartLegend">
                                                             { selectedInvoices.map(item => (
                                                                 <div className="pieChartItem">
@@ -102,6 +103,7 @@ class CustomerSearchPage extends Component {
 const mapStateToProps = state => ({
     user: userSelector(state),
     invoices: invoiceListPieChartSelector(state),
+    totalCount: invoiceTotalCountSelector(state),
     customers: customersSelector(state),
     productTypes: productTypesSelector(state)
 });
@@ -127,6 +129,7 @@ CustomerSearchPage.propTypes = {
         isBusy: PropTypes.bool.isRequired,
         isEnd: PropTypes.bool.isRequired
     }).isRequired,
+    totalCount: PropTypes.number.isRequired,
     customers: PropTypes.arrayOf(PropTypes.object).isRequired,
     productTypes: PropTypes.arrayOf(PropTypes.object).isRequired
 };

@@ -4,7 +4,9 @@ const defaultState = {
     isBusy: false,
     isFetched: false,
     isEnd: false,
-    invoices: []
+    invoices: [],
+    totalCount: 0,
+    page: 0
 };
 
 export default (state = defaultState, action) => {
@@ -28,7 +30,13 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 invoices: [...state.invoices, ...action.payload.recordset],
-                isEnd: action.payload.isEnd || false
+                isEnd: action.payload.isEnd || false,
+                page: action.payload.page || 0
+            };
+        case CONSTANTS.FETCH_INVOICES_COUNT_SUCCESS:
+            return {
+                ...state,
+                totalCount: action.payload || 0
             };
         case CONSTANTS.FETCH_INVOICES_FAILURE:
             return {

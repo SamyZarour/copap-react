@@ -9,60 +9,28 @@ import { checkNested, getColorFromHTTPCode } from '../utils';
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 export function* watchFetchIndexInvoices() {
-    yield takeLatest(CONSTANTS.FETCH_INDEX_INVOICES, fetchIndexInvoicesAsync);
+    yield takeLatest(CONSTANTS.FETCH_INDEX_INVOICES, fetchInvoicesAsync);
 }
 
 export function* watchFetchBrandInvoices() {
-    yield takeLatest(CONSTANTS.FETCH_BRAND_INVOICES, fetchBrandInvoicesAsync);
+    yield takeLatest(CONSTANTS.FETCH_BRAND_INVOICES, fetchInvoicesAsync);
 }
 
 export function* watchFetchCustomerInvoices() {
-    yield takeLatest(CONSTANTS.FETCH_CUSTOMER_INVOICES, fetchCustomerInvoicesAsync);
+    yield takeLatest(CONSTANTS.FETCH_CUSTOMER_INVOICES, fetchInvoicesAsync);
 }
 
-export function* fetchIndexInvoicesAsync(action) {
+export function* fetchInvoicesAsync(action) {
     try {
         yield delay(1000);
         yield put(ACTIONS.fetchInvoicesRequest());
-        const response = yield call(API.getIndex, { ...action.payload, pageSize: CONSTANTS.INVOICE_PAGE_SIZE });
+        yield put(ACTIONS.fetchInvoicesCount());
+        const responseCount = yield call(API.getInvoices, { ...action.payload, isCount: true });
+        const count = responseCount.data && responseCount.data.recordset && responseCount.data.recordset.length === 1 && responseCount.data.recordset[0][''];
+        yield put(ACTIONS.fetchInvoicesCountSuccess(count));
+        const response = yield call(API.getInvoices, { ...action.payload, pageSize: CONSTANTS.INVOICE_PAGE_SIZE });
         const isEnd = response.data && response.data.recordset && response.data.recordset.length < CONSTANTS.INVOICE_PAGE_SIZE;
-        yield put(ACTIONS.fetchInvoicesSuccess({ ...response.data, isEnd }));
-    } catch (e) {
-        yield put(ACTIONS.fetchInvoicesFailure(e));
-        if (checkNested(e, 'response', 'status') && e.response.status === 401) { yield put(ACTIONS_AUTH.logout()); }
-        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
-        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
-        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
-    } finally {
-        yield put(ACTIONS.fetchInvoicesDone());
-    }
-}
-
-export function* fetchBrandInvoicesAsync(action) {
-    try {
-        yield delay(1000);
-        yield put(ACTIONS.fetchInvoicesRequest());
-        const response = yield call(API.getByBrand, { ...action.payload, pageSize: CONSTANTS.INVOICE_PAGE_SIZE });
-        const isEnd = response.data && response.data.recordset && response.data.recordset.length < CONSTANTS.INVOICE_PAGE_SIZE;
-        yield put(ACTIONS.fetchInvoicesSuccess({ ...response.data, isEnd }));
-    } catch (e) {
-        yield put(ACTIONS.fetchInvoicesFailure(e));
-        if (checkNested(e, 'response', 'status') && e.response.status === 401) { yield put(ACTIONS_AUTH.logout()); }
-        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
-        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
-        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
-    } finally {
-        yield put(ACTIONS.fetchInvoicesDone());
-    }
-}
-
-export function* fetchCustomerInvoicesAsync(action) {
-    try {
-        yield delay(1000);
-        yield put(ACTIONS.fetchInvoicesRequest());
-        const response = yield call(API.getByCustomer, action.payload);
-        const isEnd = response.data && response.data.recordset && response.data.recordset.length < CONSTANTS.INVOICE_PAGE_SIZE;
-        yield put(ACTIONS.fetchInvoicesSuccess({ ...response.data, isEnd }));
+        yield put(ACTIONS.fetchInvoicesSuccess({ ...response.data, isEnd, page: action.payload.page }));
     } catch (e) {
         yield put(ACTIONS.fetchInvoicesFailure(e));
         if (checkNested(e, 'response', 'status') && e.response.status === 401) { yield put(ACTIONS_AUTH.logout()); }

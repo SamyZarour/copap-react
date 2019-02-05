@@ -17,3 +17,8 @@ export const invoiceListPieChartSelector = createSelector(
     invoiceListSelector,
     invoices => invoices.map((item, index) => ({ label: item.InvoiceNo, title: item.InvoiceNo, value: item.TotalSale, color: colors[index] }))
 );
+
+export const invoiceTotalCountSelector = createSelector(
+    _invoicesSelector,
+    invoices => invoices.totalCount
+);

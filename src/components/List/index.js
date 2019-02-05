@@ -18,8 +18,8 @@ class List extends Component {
     }
 
     onScroll() {
-        const { isEnd } = this.props;
-        if (!isEnd && (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) && this.props.list.length) {
+        const { isBusy, isEnd } = this.props;
+        if (!isBusy && !isEnd && (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) && this.props.list.length) {
             this.props.onPaginatedSearch();
         }
     }
