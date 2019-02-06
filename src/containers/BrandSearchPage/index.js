@@ -34,13 +34,13 @@ class BrandSearchPage extends Component {
     }
 
     setSearchCriteria(criteria) {
-        const { invoices: { page }, user: { role } } = this.props;
+        const { user: { role } } = this.props;
 
         this.props.resetInvoices();
         const newState = { ...this.state, ...criteria };
         this.setState(newState);
 
-        const query = { ...newState, isAdmin: role === 'admin', page: page + 1 };
+        const query = { ...newState, isAdmin: role === 'admin', page: 1 };
         this.props.fetchInvoices(query);
     }
 

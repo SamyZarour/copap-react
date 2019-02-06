@@ -28,11 +28,11 @@ class HomePage extends Component {
     }
 
     setSearchCriteria(criteria) {
-        const { invoices: { page }, user: { role } } = this.props;
+        const { user: { role } } = this.props;
 
         this.props.resetInvoices();
         this.setState(criteria);
-        const query = { ...criteria, isAdmin: role === 'admin', page: page + 1 };
+        const query = { ...criteria, isAdmin: role === 'admin', page: 1 };
         this.props.fetchInvoices(query);
     }
 
