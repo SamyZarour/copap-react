@@ -36,7 +36,8 @@ export const generateInvoicesQuery = (
     const serializeFilters = (type, filters) => filters.length > 0 ? ` ${type} ${filters.join(' AND ')}` : '';
     const serializeFields = fields => fields.length > 0 ? fields.map(f => f.field).join(', ') : '*';
     const serializeFieldsWithLabel = fields => fields.length > 0 ? fields.map(f => `${f.field} as ${f.label}`).join(', ') : '*';
-    return `SELECT ${isCount ? 'COUNT(DISTINCT b.BuySellNo)' : serializeFieldsWithLabel([...queryFields, ...queryAgregators])} FROM  (SELECT * FROM BuySell${serializeFilters('WHERE', buySellFilters)}) AS b INNER JOIN Counterparty AS c ON b.CustID = c.CpID INNER JOIN Counterparty AS v ON b.VendorID = v.CpID INNER JOIN WksDetail AS w ON w.BuySellNo = b.BuySellNo GROUP BY ${serializeFields(queryFields)}${serializeFilters('HAVING', havingFilters)}${isCount ? '' : ` ORDER BY InvoiceNo OFFSET ${((page - 1) * pageSize) || 0} ROWS FETCH NEXT ${pageSize || 0} ROWS ONLY`};`;
+    const generateQuery = () => `SELECT ${serializeFieldsWithLabel([...queryFields, ...queryAgregators])} FROM  (SELECT * FROM BuySell${serializeFilters('WHERE', buySellFilters)}) AS b INNER JOIN Counterparty AS c ON b.CustID = c.CpID INNER JOIN Counterparty AS v ON b.VendorID = v.CpID INNER JOIN WksDetail AS w ON w.BuySellNo = b.BuySellNo GROUP BY ${serializeFields(queryFields)}${serializeFilters('HAVING', havingFilters)}${isCount ? '' : ` ORDER BY InvoiceNo OFFSET ${((page - 1) * pageSize) || 0} ROWS FETCH NEXT ${pageSize || 0} ROWS ONLY`}`;
+    return isCount ? `SELECT COUNT(*) AS count FROM (${generateQuery()}) AS Invoices` : generateQuery();
 };
 
 export const getInvoices = ({

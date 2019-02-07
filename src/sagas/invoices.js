@@ -26,7 +26,7 @@ export function* fetchInvoicesAsync(action) {
         yield put(ACTIONS.fetchInvoicesRequest());
         yield put(ACTIONS.fetchInvoicesCount());
         const responseCount = yield call(API.getInvoices, { ...action.payload, isCount: true });
-        const count = responseCount.data && responseCount.data.recordset && responseCount.data.recordset.length === 1 && responseCount.data.recordset[0][''];
+        const count = responseCount.data && responseCount.data.recordset && responseCount.data.recordset.length === 1 && responseCount.data.recordset[0].count;
         yield put(ACTIONS.fetchInvoicesCountSuccess(count));
         const response = yield call(API.getInvoices, { ...action.payload, pageSize: CONSTANTS.INVOICE_PAGE_SIZE });
         const isEnd = response.data && response.data.recordset && response.data.recordset.length < CONSTANTS.INVOICE_PAGE_SIZE;
