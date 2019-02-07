@@ -31,7 +31,7 @@ class List extends Component {
                 {
                     (() => {
                         if (!isBusy && list.length === 0) { return <div>No Items</div>; }
-                        return list.map(item => <ListItem {...item} key={item.id} />);
+                        return list.map(item => <ListItem {...item} key={item.InvoiceNo} />);
                     })()
                 }
                 { isBusy && <Spinner /> }

@@ -35,7 +35,7 @@ const Invoice = ({
             </div>
             <div className="row">
                 <div className="column label">Order Date</div>
-                <div className="column value">{moment(OrderDate).format('YYYY-MM-DD')}</div>
+                <div className="column value">{moment.utc(OrderDate).format('YYYY-MM-DD')}</div>
             </div>
             <div className="row">
                 <div className="column label">Product Type</div>
@@ -65,7 +65,7 @@ const Invoice = ({
             )}
             <div className="row">
                 <div className="column label">Due Date</div>
-                <div className="column value">{moment(DueDate).format('YYYY-MM-DD')}</div>
+                <div className="column value">{moment.utc(DueDate).format('YYYY-MM-DD')}</div>
             </div>
             <div className="row">
                 <div className="column label">Commission</div>
