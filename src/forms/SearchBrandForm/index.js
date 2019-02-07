@@ -7,12 +7,12 @@ import './style.scss';
 
 const invoiceOptions = [
     {
-        label: 'Open',
-        value: 'open'
+        label: 'Paid',
+        value: '1'
     },
     {
-        label: 'Closed',
-        value: 'closed'
+        label: 'Unpaid',
+        value: '0'
     }
 ];
 

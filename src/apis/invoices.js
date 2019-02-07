@@ -9,6 +9,7 @@ const generateDestinationationCountry = () => 'SELECT DISTINCT ShipToID FROM Buy
 export const generateInvoicesQuery = (
     isAdmin,
     isCount,
+    invoiceType,
     page,
     pageSize,
     brand,
@@ -31,7 +32,7 @@ export const generateInvoicesQuery = (
     const adminFields = [{ field: 'w.PCurrencyCd', label: 'CurrencyBuy' }, { field: 'w.PPrice', label: 'PriceBuy' }, { field: 'w.PUOM', label: 'PriceUomBuy' }];
     const queryAgregators = [...(isAdmin ? adminAgregators : []), { field: 'SUM(w.SWeight)', label: 'Qty' }, { field: 'SUM(w.SAmount)', label: 'TotalSale' }];
     const queryFields = [...(isAdmin ? adminFields : []), { field: 'b.BuySellNo', label: 'InvoiceNo' }, { field: 'b.UserID', label: 'SalesRep' }, { field: 'c.CompanyNm', label: 'Client' }, { field: 'b.OrderDt', label: 'OrderDate' }, { field: 'b.TradeType', label: 'ProductType' }, { field: 'v.CompanyNm', label: 'Supplier' }, { field: 'w.SWeightUOM', label: 'QtyUom' }, { field: 'w.SPrice', label: 'PriceSale' }, { field: 'w.SPriceUOM', label: 'PriceUomSale' }, { field: 'w.SCurrencyCd', label: 'CurrencySale' }, { field: 'b.DueDt', label: 'DueDate' }, { field: 'b.Commission1', label: 'Commission' }, { field: 'b.AltCoEmail', label: 'ContactPoint' }];
-    const buySellFilters = [`VendorID LIKE '${brand || '%'}'`, `CustID LIKE '${customer || '%'}'`, `BuySellNo LIKE '${invoiceNumber || '%'}'`, `RefPONo LIKE '${poNumber || '%'}'`, `RefSONo LIKE '${soNumber || '%'}'`, `TradeType LIKE '${productType || '%'}'`, `ShipToID LIKE '${destinationCountry || '%'}'`, `OrderDt >= '${orderDateFrom || '01/01/1970'}'`, `OrderDt ${orderDateTo ? `<= '${orderDateTo}'` : '> \'01/01/1970\''}`, `DueDt >= '${dueDateFrom || '01/01/1970'}'`, `DueDt ${dueDateTo ? `<= '${dueDateTo}'` : '> \'01/01/1970\''}`];
+    const buySellFilters = [`VendorID LIKE '${brand || '%'}'`, `CustID LIKE '${customer || '%'}'`, `BuySellNo LIKE '${invoiceNumber || '%'}'`, `RefPONo LIKE '${poNumber || '%'}'`, `RefSONo LIKE '${soNumber || '%'}'`, `TradeType LIKE '${productType || '%'}'`, `ShipToID LIKE '${destinationCountry || '%'}'`, `OrderDt >= '${orderDateFrom || '01/01/1970'}'`, `OrderDt ${orderDateTo ? `<= '${orderDateTo}'` : '> \'01/01/1970\''}`, `DueDt >= '${dueDateFrom || '01/01/1970'}'`, `DueDt ${dueDateTo ? `<= '${dueDateTo}'` : '> \'01/01/1970\''}`, ['0', '1'].includes(invoiceType) ? `Completed = ${invoiceType}` : '(Completed = 1 OR Completed = 0)'];
     const havingFilters = [`SUM(w.SAmount) >= ${valueLow || 0}`, valueHigh ? `SUM(w.SAmount) <= ${valueHigh}` : 'SUM(w.SAmount) >= 0', `SUM(w.SWeight) >= ${quantityLow || 0}`, quantityHigh ? `SUM(w.SWeight) <= ${quantityHigh}` : 'SUM(w.SWeight) >= 0'];
     const serializeFilters = (type, filters) => filters.length > 0 ? ` ${type} ${filters.join(' AND ')}` : '';
     const serializeFields = fields => fields.length > 0 ? fields.map(f => f.field).join(', ') : '*';
@@ -43,6 +44,7 @@ export const generateInvoicesQuery = (
 export const getInvoices = ({
     isAdmin,
     isCount,
+    invoiceType,
     page,
     pageSize,
     brand,
@@ -60,7 +62,7 @@ export const getInvoices = ({
     orderDateTo,
     dueDateFrom,
     dueDateTo
-}) => axios.post(`${config.url_sql}/sql`, { query: generateInvoicesQuery(isAdmin, isCount, page, pageSize, brand, valueLow, valueHigh, quantityLow, quantityHigh, customer, invoiceNumber, poNumber, soNumber, productType, destinationCountry, orderDateFrom, orderDateTo, dueDateFrom, dueDateTo) }, { headers: { authorization: `Bearer ${getToken()}` } });
+}) => axios.post(`${config.url_sql}/sql`, { query: generateInvoicesQuery(isAdmin, isCount, invoiceType, page, pageSize, brand, valueLow, valueHigh, quantityLow, quantityHigh, customer, invoiceNumber, poNumber, soNumber, productType, destinationCountry, orderDateFrom, orderDateTo, dueDateFrom, dueDateTo) }, { headers: { authorization: `Bearer ${getToken()}` } });
 
 export const getBrands = () => axios.post(`${config.url_sql}/sql`, { query: generateBrandNameQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
 export const getCustomers = () => axios.post(`${config.url_sql}/sql`, { query: generateClientNameQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
