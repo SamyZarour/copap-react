@@ -84,7 +84,8 @@ export const renderFieldSelect = config => {
         }),
         singleValue: (provided, state) => ({
             ...provided,
-            color: state.isDisabled ? '#CCC' : 'black'
+            color: state.isDisabled ? '#CCC' : 'black',
+            top: '85%'
         })
     };
 

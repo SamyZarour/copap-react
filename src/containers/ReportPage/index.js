@@ -24,29 +24,27 @@ class ReportPage extends Component {
 
     componentWillMount() {
         const { range } = this.state;
-        const { user: { username, role }, resetInvoices, fetchInvoices, fetchTrader } = this.props;
+        const { user: { username, role }, fetchInvoices, initSearch } = this.props;
         const isAdmin = role === 'admin';
-        resetInvoices();
+
         if (isAdmin) {
-            fetchTrader();
+            initSearch({ traders: true });
         } else {
-            fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: username, isPaged: false });
+            fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: username, isPaged: false, reset: true });
         }
     }
 
     setDateRange(range) {
-        const { resetInvoices, fetchInvoices } = this.props;
-        resetInvoices();
-        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: this.props.user.username, isPaged: false });
+        const { fetchInvoices } = this.props;
+        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: this.props.user.username, isPaged: false, reset: true });
         this.setState({ range });
     }
 
     setTrader(trader) {
         const { range } = this.state;
-        const { resetInvoices, fetchInvoices } = this.props;
+        const { fetchInvoices } = this.props;
 
-        resetInvoices();
-        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: trader.value, isPaged: false });
+        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: trader.value, isPaged: false, reset: true });
         this.setState({ trader });
     }
 
@@ -79,9 +77,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    resetInvoices: () => dispatch(ACTIONS.resetInvoices()),
-    fetchInvoices: criteria => dispatch(ACTIONS.fetchCustomerInvoices(criteria)),
-    fetchTrader: () => dispatch(ACTIONS_SEARCH.fetchTraders())
+    initSearch: fields => dispatch(ACTIONS_SEARCH.initSearch(fields)),
+    fetchInvoices: criteria => dispatch(ACTIONS.fetchCustomerInvoices(criteria))
 });
 
 ReportPage.propTypes = {
@@ -94,9 +91,8 @@ ReportPage.propTypes = {
         isFetched: PropTypes.bool.isRequired,
         isBusy: PropTypes.bool.isRequired
     }).isRequired,
-    resetInvoices: PropTypes.func.isRequired,
+    initSearch: PropTypes.func.isRequired,
     fetchInvoices: PropTypes.func.isRequired,
-    fetchTrader: PropTypes.func.isRequired,
     traders: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 

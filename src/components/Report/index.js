@@ -34,7 +34,7 @@ const Report = ({
                     <div className="column label">Categories</div>
                     <div className="column">
                         { Object.keys(categories).map(category => (
-                            <div className="row category" id={category}>
+                            <div className="row category" key={category}>
                                 <div className="column label">{category}</div>
                                 <div className="column value">{Math.round(10000 * categories[category] / totalValue) / 100}%</div>
                             </div>

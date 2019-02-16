@@ -23,9 +23,7 @@ class CustomerSearchPage extends Component {
     }
 
     componentWillMount() {
-        this.props.resetInvoices();
-        this.props.fetchCustomers();
-        this.props.fetchProductTypes();
+        this.props.initSearch({ customers: true, productTypes: true });
     }
 
     setCustomer(customer) {
@@ -33,11 +31,10 @@ class CustomerSearchPage extends Component {
     }
 
     setSearchCriteria(criteria) {
-        this.props.resetInvoices();
         const newState = { ...this.state, ...criteria, selectedInvoices: [] };
         this.setState(newState);
         const query = { ...newState, isAdmin: this.props.user.role === 'admin' };
-        this.props.fetchInvoices(query);
+        this.props.fetchInvoices({ ...query, reset: true });
     }
 
     setInvoices(selectedInvoices) {
@@ -109,9 +106,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchCustomers: () => dispatch(ACTIONS_SEARCH.fetchCustomers()),
-    fetchProductTypes: () => dispatch(ACTIONS_SEARCH.fetchProductTypes()),
-    resetInvoices: () => dispatch(ACTIONS.resetInvoices()),
+    initSearch: fields => dispatch(ACTIONS_SEARCH.initSearch(fields)),
     fetchInvoices: criteria => dispatch(ACTIONS.fetchCustomerInvoices(criteria))
 });
 
@@ -120,9 +115,7 @@ CustomerSearchPage.propTypes = {
         username: PropTypes.string.isRequired,
         role: PropTypes.string
     }).isRequired,
-    fetchCustomers: PropTypes.func.isRequired,
-    fetchProductTypes: PropTypes.func.isRequired,
-    resetInvoices: PropTypes.func.isRequired,
+    initSearch: PropTypes.func.isRequired,
     fetchInvoices: PropTypes.func.isRequired,
     invoices: PropTypes.shape({
         invoices: PropTypes.arrayOf(PropTypes.object).isRequired,

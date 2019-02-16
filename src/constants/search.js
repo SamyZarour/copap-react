@@ -2,6 +2,8 @@ export const SEARCH_REQUEST = 'SEARCH_REQUEST';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
 export const SEARCH_DONE = 'SEARCH_DONE';
 
+export const INIT_SEARCH = 'INIT_SEARCH';
+
 export const FETCH_BRANDS = 'FETCH_BRANDS';
 export const FETCH_BRANDS_SUCCESS = 'FETCH_BRANDS_SUCCESS';
 

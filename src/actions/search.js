@@ -4,6 +4,8 @@ export const searchRequest = () => ({ type: CONSTANTS.SEARCH_REQUEST, payload: t
 export const searchFailure = error => ({ type: CONSTANTS.SEARCH_FAILURE, payload: error });
 export const searchDone = () => ({ type: CONSTANTS.SEARCH_DONE, payload: false });
 
+export const initSearch = fields => ({ type: CONSTANTS.INIT_SEARCH, payload: fields });
+
 export const fetchBrands = user => ({ type: CONSTANTS.FETCH_BRANDS, payload: user });
 export const fetchBrandsSuccess = user => ({ type: CONSTANTS.FETCH_BRANDS_SUCCESS, payload: user });
 

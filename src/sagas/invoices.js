@@ -23,6 +23,9 @@ export function* watchFetchCustomerInvoices() {
 export function* fetchInvoicesAsync(action) {
     try {
         yield delay(1000);
+        const { reset } = action.payload;
+
+        if (reset) { yield put(ACTIONS.resetInvoices()); }
         yield put(ACTIONS.fetchInvoicesRequest());
         yield put(ACTIONS.fetchInvoicesCount());
         const responseCount = yield call(API.getInvoices, { ...action.payload, isCount: true });

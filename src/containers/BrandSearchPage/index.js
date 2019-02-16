@@ -23,10 +23,7 @@ class BrandSearchPage extends Component {
     }
 
     componentWillMount() {
-        this.props.resetInvoices();
-        this.props.fetchBrands();
-        this.props.fetchCustomers();
-        this.props.fetchProductTypes();
+        this.props.initSearch({ brands: true, customers: true, productTypes: true });
     }
 
     setBrand(brand) {
@@ -36,12 +33,11 @@ class BrandSearchPage extends Component {
     setSearchCriteria(criteria) {
         const { user: { role } } = this.props;
 
-        this.props.resetInvoices();
         const newState = { ...this.state, ...criteria };
         this.setState(newState);
-
         const query = { ...newState, isAdmin: role === 'admin', page: 1 };
-        this.props.fetchInvoices(query);
+
+        this.props.fetchInvoices({ ...query, reset: true });
     }
 
     getNextPage() {
@@ -80,10 +76,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchBrands: () => dispatch(ACTIONS_SEARCH.fetchBrands()),
-    fetchCustomers: () => dispatch(ACTIONS_SEARCH.fetchCustomers()),
-    fetchProductTypes: () => dispatch(ACTIONS_SEARCH.fetchProductTypes()),
-    resetInvoices: () => dispatch(ACTIONS.resetInvoices()),
+    initSearch: fields => dispatch(ACTIONS_SEARCH.initSearch(fields)),
     fetchInvoices: criteria => dispatch(ACTIONS.fetchBrandInvoices(criteria))
 });
 
@@ -92,10 +85,7 @@ BrandSearchPage.propTypes = {
         username: PropTypes.string.isRequired,
         role: PropTypes.string
     }).isRequired,
-    fetchBrands: PropTypes.func.isRequired,
-    fetchCustomers: PropTypes.func.isRequired,
-    fetchProductTypes: PropTypes.func.isRequired,
-    resetInvoices: PropTypes.func.isRequired,
+    initSearch: PropTypes.func.isRequired,
     fetchInvoices: PropTypes.func.isRequired,
     invoices: PropTypes.shape({
         invoices: PropTypes.arrayOf(PropTypes.object).isRequired,
