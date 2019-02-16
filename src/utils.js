@@ -1,6 +1,14 @@
+import moment from 'moment';
+
 export const TOKEN_KEY = 'login_token';
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
+
+export const getDateRange = (range = 1) => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - range);
+    return moment.utc(date).format('YYYY-MM-DD');
+};
 
 export const logOutUser = history => {
     localStorage.removeItem(TOKEN_KEY);

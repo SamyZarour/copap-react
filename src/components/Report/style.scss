@@ -1,0 +1,29 @@
+.Report{
+  margin: 50px auto;
+  max-width: 600px;
+  font-size: 20px;
+  .rows{
+    .row{
+      padding: 10px;
+      border-bottom: 1px solid black;
+
+      .column{
+        text-align: left;
+      }
+
+      .category{
+        border: none;
+
+        .value{
+          text-align: right;
+        }
+      }
+    }
+
+    .head{
+      padding: 30px 10px;
+      justify-content: center;
+      font-weight: bold;
+    }
+  }
+}

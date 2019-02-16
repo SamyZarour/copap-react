@@ -13,8 +13,8 @@ class LandingPage extends React.Component {
     }
 
     handleSubmit(values) {
-        const { email, password } = values;
-        this.props.login(email, password);
+        const { username, password } = values;
+        this.props.login(username, password);
     }
 
     render() {
@@ -27,7 +27,7 @@ class LandingPage extends React.Component {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    login: (email, password) => dispatch(ACTIONS.login({ email, password }))
+    login: (username, password) => dispatch(ACTIONS.login({ username, password }))
 });
 
 LandingPage.propTypes = {

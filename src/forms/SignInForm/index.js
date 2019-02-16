@@ -7,10 +7,10 @@ import Spinner from '../../components/Spinner/index';
 const validate = values => {
     const errors = {};
 
-    if (!values.email) {
-        errors.email = 'Field is required';
-    } else if (!values.email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
-        errors.email = 'Invalid format';
+    if (!values.username) {
+        errors.username = 'Field is required';
+    } else if (!values.username.match(/^[a-zA-Z0-9-]+$/)) {
+        errors.username = 'Invalid format';
     }
 
     if (!values.password) {
@@ -33,7 +33,7 @@ const SignInForm = props => {
     return (
         <form className="form" onSubmit={handleSubmit}>
             <div className="fields">
-                <Field name="email" type="email" label="Email" component={renderField} autocomplete="email" />
+                <Field name="username" type="username" label="Username" component={renderField} autocomplete="username" />
                 <Field name="password" type="password" label="Password" component={renderField} />
             </div>
             <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Login { submitting && <Spinner />}</button>
