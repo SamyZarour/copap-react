@@ -6,9 +6,11 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { getDateRange } from '../../utils';
 import { userSelector } from '../../selectors/auth';
+import { tradersSelector } from '../../selectors/search';
 import { invoicesSelector } from '../../selectors/invoices';
 import { RANGE_LABELS } from '../../constants/invoices';
 import * as ACTIONS from '../../actions/invoices';
+import * as ACTIONS_SEARCH from '../../actions/search';
 import Spinner from '../../components/Spinner';
 import Report from '../../components/Report';
 
@@ -16,31 +18,53 @@ class ReportPage extends Component {
     constructor(props) {
         super(props);
         this.setDateRange = this.setDateRange.bind(this);
-        this.state = { selectedDateRange: { label: RANGE_LABELS[1], value: 1 } };
+        this.setTrader = this.setTrader.bind(this);
+        this.state = { range: { label: RANGE_LABELS[1], value: 1 } };
     }
 
     componentWillMount() {
-        const { selectedDateRange } = this.state;
-        this.props.resetInvoices();
-        this.props.fetchInvoices({ orderDateFrom: getDateRange(selectedDateRange.value), userId: this.props.user.username, isPaged: false });
+        const { range } = this.state;
+        const { user: { username, role }, resetInvoices, fetchInvoices, fetchTrader } = this.props;
+        const isAdmin = role === 'admin';
+        resetInvoices();
+        if (isAdmin) {
+            fetchTrader();
+        } else {
+            fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: username, isPaged: false });
+        }
     }
 
     setDateRange(range) {
-        this.props.resetInvoices();
-        this.props.fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: this.props.user.username, isPaged: false });
-        this.setState({ selectedDateRange: range });
+        const { resetInvoices, fetchInvoices } = this.props;
+        resetInvoices();
+        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: this.props.user.username, isPaged: false });
+        this.setState({ range });
+    }
+
+    setTrader(trader) {
+        const { range } = this.state;
+        const { resetInvoices, fetchInvoices } = this.props;
+
+        resetInvoices();
+        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: trader.value, isPaged: false });
+        this.setState({ trader });
     }
 
     render() {
-        const { selectedDateRange } = this.state;
-        const { user, invoices: { invoices, isBusy, isFetched } } = this.props;
+        const { range, trader } = this.state;
+        const { user: { role }, invoices: { invoices, isBusy, isFetched }, traders } = this.props;
+        const isAdmin = role === 'admin';
 
         return (
             <div className="ReportPage">
                 <div>
                     <div>
-                        <Select placeholder="Date Range..." onChange={this.setDateRange} value={selectedDateRange} options={Object.keys(RANGE_LABELS).map(value => ({ label: RANGE_LABELS[value], value }))} />
-                        { (isBusy || !isFetched) ? <Spinner /> : <Report user={user} invoices={invoices} /> }
+                        <Select placeholder="Date Range..." onChange={this.setDateRange} value={range} options={Object.keys(RANGE_LABELS).map(value => ({ label: RANGE_LABELS[value], value }))} />
+                        { isAdmin && <Select placeholder="Select Agent..." onChange={this.setTrader} value={trader} options={traders} /> }
+                        <div className="reportResult">
+                            { (!trader && isAdmin) && <div>Please choose a trader</div> }
+                            { (trader || !isAdmin) && (((isBusy || !isFetched)) ? <Spinner /> : <Report invoices={invoices} />)}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,12 +74,14 @@ class ReportPage extends Component {
 
 const mapStateToProps = state => ({
     user: userSelector(state),
+    traders: tradersSelector(state),
     invoices: invoicesSelector(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     resetInvoices: () => dispatch(ACTIONS.resetInvoices()),
-    fetchInvoices: criteria => dispatch(ACTIONS.fetchCustomerInvoices(criteria))
+    fetchInvoices: criteria => dispatch(ACTIONS.fetchCustomerInvoices(criteria)),
+    fetchTrader: () => dispatch(ACTIONS_SEARCH.fetchTraders())
 });
 
 ReportPage.propTypes = {
@@ -69,7 +95,9 @@ ReportPage.propTypes = {
         isBusy: PropTypes.bool.isRequired
     }).isRequired,
     resetInvoices: PropTypes.func.isRequired,
-    fetchInvoices: PropTypes.func.isRequired
+    fetchInvoices: PropTypes.func.isRequired,
+    fetchTrader: PropTypes.func.isRequired,
+    traders: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReportPage));

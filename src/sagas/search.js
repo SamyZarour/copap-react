@@ -1,6 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { checkNested, getColorFromHTTPCode } from '../utils';
 import {
+    FETCH_TRADERS,
     FETCH_BRANDS,
     FETCH_CUSTOMERS,
     FETCH_DESTINATION_COUNTRIES,
@@ -9,6 +10,10 @@ import {
 import * as API from '../apis/invoices';
 import * as ACTIONS from '../actions/search';
 import * as ACTIONS_MODAL from '../actions/modal';
+
+export function* watchFetchTraders() {
+    yield takeLatest(FETCH_TRADERS, fetchTradersAsync);
+}
 
 export function* watchFetchBrands() {
     yield takeLatest(FETCH_BRANDS, fetchBrandsAsync);
@@ -24,6 +29,22 @@ export function* watchFetchDestinationCountries() {
 
 export function* watchFetchProductTypes() {
     yield takeLatest(FETCH_PRODUCT_TYPES, fetchProductTypesAsync);
+}
+
+export function* fetchTradersAsync(action) {
+    try {
+        yield put(ACTIONS.searchRequest());
+        const response = yield call(API.getTraders, action.payload);
+        const traders = response.data && response.data.recordset && response.data.recordset.map(item => ({ label: item.label.trim(), value: item.value.trim() }));
+        yield put(ACTIONS.fetchTradersSuccess(traders));
+    } catch (e) {
+        yield put(ACTIONS.searchFailure(e));
+        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
+        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
+        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
+    } finally {
+        yield put(ACTIONS.searchDone());
+    }
 }
 
 export function* fetchBrandsAsync(action) {
@@ -91,6 +112,7 @@ export function* fetchProductTypesAsync(action) {
 }
 
 export default [
+    watchFetchTraders,
     watchFetchBrands,
     watchFetchCustomers,
     watchFetchDestinationCountries,

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getToken } from '../utils';
 import config from '../config';
 
+const generateTraderQuery = () => 'SELECT DISTINCT UserID as label, UserID as value FROM BuySell';
 const generateBrandNameQuery = () => 'SELECT DISTINCT v.CompanyNm as label, v.CpID as value FROM BuySell AS b INNER JOIN Counterparty AS v ON b.VendorID = v.CpID';
 const generateClientNameQuery = () => 'SELECT DISTINCT c.CompanyNm as label, c.CpID as value FROM BuySell AS b INNER JOIN Counterparty AS c ON b.CustID = c.CpID';
 const generateProductTypeQuery = () => 'SELECT DISTINCT TradeType as ProductType FROM BuySell';
@@ -68,6 +69,7 @@ export const getInvoices = ({
     dueDateTo
 }) => axios.post(`${config.url_sql}/sql`, { query: generateInvoicesQuery(isAdmin, isCount, isPaged, userId, invoiceType, page, pageSize, brand, valueLow, valueHigh, quantityLow, quantityHigh, customer, invoiceNumber, poNumber, soNumber, productType, destinationCountry, orderDateFrom, orderDateTo, dueDateFrom, dueDateTo) }, { headers: { authorization: `Bearer ${getToken()}` } });
 
+export const getTraders = () => axios.post(`${config.url_sql}/sql`, { query: generateTraderQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
 export const getBrands = () => axios.post(`${config.url_sql}/sql`, { query: generateBrandNameQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
 export const getCustomers = () => axios.post(`${config.url_sql}/sql`, { query: generateClientNameQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
 export const getProductTypes = () => axios.post(`${config.url_sql}/sql`, { query: generateProductTypeQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });

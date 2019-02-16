@@ -15,3 +15,6 @@ export const fetchDestinationCountriesSuccess = user => ({ type: CONSTANTS.FETCH
 
 export const fetchProductTypes = user => ({ type: CONSTANTS.FETCH_PRODUCT_TYPES, payload: user });
 export const fetchProductTypesSuccess = user => ({ type: CONSTANTS.FETCH_PRODUCT_TYPES_SUCCESS, payload: user });
+
+export const fetchTraders = user => ({ type: CONSTANTS.FETCH_TRADERS, payload: user });
+export const fetchTradersSuccess = user => ({ type: CONSTANTS.FETCH_TRADERS_SUCCESS, payload: user });

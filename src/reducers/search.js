@@ -3,6 +3,7 @@ import * as CONSTANTS from '../constants/search';
 const defaultState = {
     isBusy: false,
     isFetched: false,
+    traders: [],
     brands: [],
     customers: [],
     destinationCountries: [],
@@ -26,6 +27,11 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 error: action.payload
+            };
+        case CONSTANTS.FETCH_TRADERS_SUCCESS:
+            return {
+                ...state,
+                traders: action.payload || []
             };
         case CONSTANTS.FETCH_BRANDS_SUCCESS:
             return {

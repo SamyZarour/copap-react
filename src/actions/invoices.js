@@ -9,8 +9,6 @@ export const resetInvoices = () => ({ type: CONSTANTS.RESET_INVOICES });
 
 export const fetchIndexInvoices = criteria => ({ type: CONSTANTS.FETCH_INDEX_INVOICES, payload: criteria });
 
-export const fetchInvoicesInitialize = criteria => ({ type: CONSTANTS.FETCH_INVOICES_INITIALIZE, payload: criteria });
-
 export const fetchInvoicesCount = () => ({ type: CONSTANTS.FETCH_INVOICES_COUNT });
 export const fetchInvoicesCountSuccess = count => ({ type: CONSTANTS.FETCH_INVOICES_COUNT_SUCCESS, payload: count });
 

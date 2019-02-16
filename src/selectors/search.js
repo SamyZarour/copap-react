@@ -2,6 +2,11 @@ import { createSelector } from 'reselect';
 
 export const _searchSelector = state => state.search;
 
+export const tradersSelector = createSelector(
+    _searchSelector,
+    search => search.traders
+);
+
 export const brandsSelector = createSelector(
     _searchSelector,
     search => search.brands
