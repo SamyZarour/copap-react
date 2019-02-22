@@ -6,20 +6,17 @@ const env = process.env.NODE_ENV;
 
 // Dev Configs
 const development = {
-    url: process.env.REACT_APP_DEV_DB_URL || 'http://localhost:3000',
-    url_sql: process.env.REACT_APP_SQL_URL || 'https://2f3dffdd.ngrok.io'
+    url: process.env.REACT_APP_DEV_DB_URL || 'http://localhost:3000'
 };
 
 // Test Configs
 const test = {
-    url: process.env.REACT_APP_TEST_DB_URL || 'http://localhost:3000',
-    url_sql: process.env.REACT_APP_SQL_URL || 'https://2f3dffdd.ngrok.io'
+    url: process.env.REACT_APP_TEST_DB_URL || 'http://localhost:3000'
 };
 
 // Prod Configs
 const production = {
-    url: process.env.REACT_APP_API_URL,
-    url_sql: process.env.REACT_APP_SQL_URL
+    url: process.env.REACT_APP_API_URL
 };
 
 // Core configs
