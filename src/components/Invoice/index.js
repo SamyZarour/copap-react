@@ -9,6 +9,7 @@ const Invoice = ({
     Commission,
     DueDate,
     InvoiceNo,
+    InvoiceDate,
     OrderDate,
     PriceBuy,
     PriceUomBuy,
@@ -36,6 +37,10 @@ const Invoice = ({
             <div className="row">
                 <div className="column label">Order Date</div>
                 <div className="column value">{moment.utc(OrderDate).format('YYYY-MM-DD')}</div>
+            </div>
+            <div className="row">
+                <div className="column label">Invoice Date</div>
+                <div className="column value">{moment.utc(InvoiceDate).format('YYYY-MM-DD')}</div>
             </div>
             <div className="row">
                 <div className="column label">Product Type</div>
@@ -88,6 +93,7 @@ Invoice.propTypes = {
     Client: PropTypes.string.isRequired,
     Commission: PropTypes.number.isRequired,
     DueDate: PropTypes.string.isRequired,
+    InvoiceDate: PropTypes.string.isRequired,
     OrderDate: PropTypes.string.isRequired,
     PriceSale: PropTypes.number.isRequired,
     PriceUomSale: PropTypes.string.isRequired,

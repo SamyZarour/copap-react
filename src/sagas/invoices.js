@@ -30,10 +30,30 @@ export function* fetchInvoicesAsync(action) {
         yield put(ACTIONS.fetchInvoicesCount());
         const responseCount = yield call(API.getInvoices, { ...action.payload, isCount: true });
         const count = responseCount.data && responseCount.data.recordset && responseCount.data.recordset.length === 1 && responseCount.data.recordset[0].count;
-        yield put(ACTIONS.fetchInvoicesCountSuccess(count));
         const response = yield call(API.getInvoices, { ...action.payload, pageSize: CONSTANTS.INVOICE_PAGE_SIZE });
         const isEnd = response.data && response.data.recordset && response.data.recordset.length < CONSTANTS.INVOICE_PAGE_SIZE;
-        yield put(ACTIONS.fetchInvoicesSuccess({ ...response.data, isEnd, page: action.payload.page }));
+        const invoicesObject = (response.data && response.data.recordset && response.data.recordset.reduce((acc, item) => {
+            const { InvoiceNo, Qty, TotalSale, TotalBuy, PriceSale, PriceBuy } = item;
+            const state = acc[InvoiceNo] || {
+                Qty: 0,
+                TotalSale: 0,
+                PriceSale: 0,
+                TotalBuy: 0,
+                PriceBuy: 0
+            };
+            acc[InvoiceNo] = {
+                ...item,
+                Qty: Math.round((Qty + state.Qty) * 100) / 100,
+                TotalSale: Math.round((TotalSale + state.TotalSale) * 100) / 100,
+                PriceSale: Math.round((PriceSale * (Qty / (Qty + state.Qty)) + state.PriceSale) * 100) / 100,
+                TotalBuy: Math.round((TotalBuy + state.TotalBuy) * 100) / 100,
+                PriceBuy: Math.round((PriceBuy * (Qty / (Qty + state.Qty)) + state.PriceBuy) * 100) / 100
+            };
+            return acc;
+        }, {})) || {};
+        const invoices = Object.keys(invoicesObject).map(key => invoicesObject[key]);
+        yield put(ACTIONS.fetchInvoicesSuccess({ invoices, isEnd, page: action.payload.page }));
+        yield put(ACTIONS.fetchInvoicesCountSuccess(count + invoices.length - response.data.recordset.length));
     } catch (e) {
         yield put(ACTIONS.fetchInvoicesFailure(e));
         if (checkNested(e, 'response', 'status') && e.response.status === 401) { yield put(ACTIONS_AUTH.logout()); }

@@ -29,7 +29,7 @@ export default (state = defaultState, action) => {
         case CONSTANTS.FETCH_INVOICES_SUCCESS:
             return {
                 ...state,
-                invoices: [...state.invoices, ...action.payload.recordset],
+                invoices: [...state.invoices, ...action.payload.invoices],
                 isEnd: action.payload.isEnd || false,
                 page: action.payload.page || 0
             };
