@@ -3,6 +3,8 @@ require('dotenv').config();
 
 // Get Current Env
 const env = process.env.NODE_ENV;
+console.log(env);
+console.log(process.env.REACT_APP_API_URL);
 
 // Dev Configs
 const development = {
