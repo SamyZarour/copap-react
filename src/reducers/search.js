@@ -7,7 +7,8 @@ const defaultState = {
     brands: [],
     customers: [],
     destinationCountries: [],
-    productTypes: []
+    productTypes: [],
+    customerInfo: null
 };
 
 export default (state = defaultState, action) => {
@@ -52,6 +53,16 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 productTypes: action.payload || []
+            };
+        case CONSTANTS.RESET_CUSTOMER_INFO:
+            return {
+                ...state,
+                customerInfo: null
+            };
+        case CONSTANTS.FETCH_CUSTOMER_INFO_SUCCESS:
+            return {
+                ...state,
+                customerInfo: action.payload
             };
         default:
             return state;

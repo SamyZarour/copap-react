@@ -2,11 +2,7 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { checkNested, getColorFromHTTPCode } from '../utils';
 import {
     INIT_SEARCH,
-    FETCH_TRADERS,
-    FETCH_BRANDS,
-    FETCH_CUSTOMERS,
-    FETCH_DESTINATION_COUNTRIES,
-    FETCH_PRODUCT_TYPES
+    FETCH_CUSTOMER_INFO
 } from '../constants/search';
 import * as API from '../apis/invoices';
 import * as ACTIONS from '../actions/search';
@@ -17,24 +13,8 @@ export function* watchInitSearch() {
     yield takeLatest(INIT_SEARCH, initSearchAsync);
 }
 
-export function* watchFetchTraders() {
-    yield takeLatest(FETCH_TRADERS, fetchTradersAsync);
-}
-
-export function* watchFetchBrands() {
-    yield takeLatest(FETCH_BRANDS, fetchBrandsAsync);
-}
-
-export function* watchFetchCustomers() {
-    yield takeLatest(FETCH_CUSTOMERS, fetchCustomersAsync);
-}
-
-export function* watchFetchDestinationCountries() {
-    yield takeLatest(FETCH_DESTINATION_COUNTRIES, fetchDestinationCountriesAsync);
-}
-
-export function* watchFetchProductTypes() {
-    yield takeLatest(FETCH_PRODUCT_TYPES, fetchProductTypesAsync);
+export function* watchFetchCustomerInfo() {
+    yield takeLatest(FETCH_CUSTOMER_INFO, fetchCustomerInfoAsync);
 }
 
 export function* initSearchAsync(action) {
@@ -83,76 +63,16 @@ export function* initSearchAsync(action) {
     }
 }
 
-export function* fetchTradersAsync(action) {
+export function* fetchCustomerInfoAsync(action) {
     try {
         yield put(ACTIONS.searchRequest());
-        const response = yield call(API.getTraders, action.payload);
-        const traders = response.data && response.data.recordset && response.data.recordset.map(item => ({ label: item.label.trim(), value: item.value.trim() }));
-        yield put(ACTIONS.fetchTradersSuccess(traders));
-    } catch (e) {
-        yield put(ACTIONS.searchFailure(e));
-        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
-        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
-        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
-    } finally {
-        yield put(ACTIONS.searchDone());
-    }
-}
-
-export function* fetchBrandsAsync(action) {
-    try {
-        yield put(ACTIONS.searchRequest());
-        const response = yield call(API.getBrands, action.payload);
-        const brands = response.data && response.data.recordset && response.data.recordset.map(item => ({ label: item.label.trim(), value: item.value.trim() }));
-        yield put(ACTIONS.fetchBrandsSuccess(brands));
-    } catch (e) {
-        yield put(ACTIONS.searchFailure(e));
-        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
-        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
-        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
-    } finally {
-        yield put(ACTIONS.searchDone());
-    }
-}
-
-export function* fetchCustomersAsync(action) {
-    try {
-        yield put(ACTIONS.searchRequest());
-        const response = yield call(API.getCustomers, action.payload);
-        const customers = response.data && response.data.recordset && response.data.recordset.map(item => ({ label: item.label.trim(), value: item.value.trim() }));
-        yield put(ACTIONS.fetchCustomersSuccess(customers));
-    } catch (e) {
-        yield put(ACTIONS.searchFailure(e));
-        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
-        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
-        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
-    } finally {
-        yield put(ACTIONS.searchDone());
-    }
-}
-
-export function* fetchDestinationCountriesAsync(action) {
-    try {
-        yield put(ACTIONS.searchRequest());
-        const response = yield call(API.getDestinationCountries, action.payload);
-        const destinationCountries = response.data && response.data.recordset && response.data.recordset.map(item => ({ label: item.ShipToID.trim(), value: item.ShipToID.trim() }));
-        yield put(ACTIONS.fetchDestinationCountriesSuccess(destinationCountries));
-    } catch (e) {
-        yield put(ACTIONS.searchFailure(e));
-        const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
-        const style = checkNested(e, 'response', 'status') ? getColorFromHTTPCode(e.response.status) : null;
-        yield put(ACTIONS_MODAL.createModal(errorMessage, style, 3000));
-    } finally {
-        yield put(ACTIONS.searchDone());
-    }
-}
-
-export function* fetchProductTypesAsync(action) {
-    try {
-        yield put(ACTIONS.searchRequest());
-        const response = yield call(API.getProductTypes, action.payload);
-        const productTypes = response.data && response.data.recordset && response.data.recordset.map(item => ({ label: item.ProductType.trim(), value: item.ProductType.trim() }));
-        yield put(ACTIONS.fetchProductTypesSuccess(productTypes));
+        const responseProductTypes = yield call(API.getCustomerProductTypes, action.payload);
+        const ProductTypes = responseProductTypes.data && responseProductTypes.data.recordset && responseProductTypes.data.recordset.map(item => item.ProductType).filter(s => !!s);
+        const responseLastPurchase = yield call(API.getCustomerLastPurchase, action.payload);
+        const LastPurchase = responseLastPurchase.data && responseLastPurchase.data.recordset && responseLastPurchase.data.recordset.length > 0 && responseLastPurchase.data.recordset[0];
+        const response = yield call(API.getCustomerInfo, action.payload);
+        const customerInfo = response.data && response.data.recordset && response.data.recordset.length > 0 && response.data.recordset[0];
+        yield put(ACTIONS.fetchCustomerInfoSuccess({ ...customerInfo, ProductTypes, LastPurchase }));
     } catch (e) {
         yield put(ACTIONS.searchFailure(e));
         const errorMessage = checkNested(e, 'response', 'data', 'message') ? e.response.data.message : 'Unknown Error';
@@ -165,9 +85,5 @@ export function* fetchProductTypesAsync(action) {
 
 export default [
     watchInitSearch,
-    watchFetchTraders,
-    watchFetchBrands,
-    watchFetchCustomers,
-    watchFetchDestinationCountries,
-    watchFetchProductTypes
+    watchFetchCustomerInfo
 ];

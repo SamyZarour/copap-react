@@ -17,6 +17,11 @@ export const customersSelector = createSelector(
     search => search.customers
 );
 
+export const customerInfoSelector = createSelector(
+    _searchSelector,
+    search => search.customerInfo
+);
+
 export const destinationCountriesSelector = createSelector(
     _searchSelector,
     search => search.destinationCountries

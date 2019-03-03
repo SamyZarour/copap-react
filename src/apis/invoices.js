@@ -7,6 +7,9 @@ const generateBrandNameQuery = () => 'SELECT DISTINCT v.CompanyNm as label, v.Cp
 const generateClientNameQuery = () => 'SELECT DISTINCT c.CompanyNm as label, c.CpID as value FROM BuySell AS b INNER JOIN Counterparty AS c ON b.CustID = c.CpID';
 const generateProductTypeQuery = () => 'SELECT DISTINCT TradeType as ProductType FROM BuySell';
 const generateDestinationationCountry = () => 'SELECT DISTINCT ShipToID FROM BuySell';
+const generateCustomerInfoQuery = customer => `SELECT c.PhoneBusiness, c.PhoneMobile, c.Email, c.CompanyNm, c.ContactNm, c2.Role, SUM(w.SWeight) as TotalQty, SUM(w.SAmount) as TotalSale, a.Addr1, a.Addr2, a.Addr3 FROM (SELECT * FROM Contact WHERE CpID='${customer}') as c INNER JOIN Counterparty as c2 ON c2.CpID = c.CpID INNER JOIN BuySell as b ON b.CustID = c.CpID INNER JOIN WksDetail AS w ON w.BuySellNo = b.BuySellNo INNER JOIN Address AS a ON a.CpID = c.CpID GROUP BY c.PhoneBusiness, c.PhoneMobile, c.Email, c.CompanyNm, c.ContactNm, w.SWeight, c2.Role, a.Addr1, a.Addr2, a.Addr3`;
+const generateCustomerProductTypesQuery = customer => `SELECT DISTINCT b.TradeType as ProductType FROM (SELECT * FROM Contact WHERE CpID='${customer}') as c INNER JOIN BuySell as b ON b.CustID = c.CpID`;
+const generateCustomerLastPurchaseQuery = customer => `SELECT TOP 1 b.OrderDt FROM (SELECT CpID FROM CounterParty WHERE CpID='${customer}') AS c INNER JOIN BuySell AS b ON c.CpID = b.CustID`;
 
 export const generateInvoicesQuery = (
     isAdmin,
@@ -77,3 +80,6 @@ export const getBrands = () => axios.post(`${config.url}/api/sql`, { query: gene
 export const getCustomers = () => axios.post(`${config.url}/api/sql`, { query: generateClientNameQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
 export const getProductTypes = () => axios.post(`${config.url}/api/sql`, { query: generateProductTypeQuery() }, { headers: { authorization: `Bearer ${getToken()}` } });
 export const getDestinationCountries = () => axios.post(`${config.url}/api/sql`, { query: generateDestinationationCountry() }, { headers: { authorization: `Bearer ${getToken()}` } });
+export const getCustomerInfo = customer => axios.post(`${config.url}/api/sql`, { query: generateCustomerInfoQuery(customer) }, { headers: { authorization: `Bearer ${getToken()}` } });
+export const getCustomerProductTypes = customer => axios.post(`${config.url}/api/sql`, { query: generateCustomerProductTypesQuery(customer) }, { headers: { authorization: `Bearer ${getToken()}` } });
+export const getCustomerLastPurchase = customer => axios.post(`${config.url}/api/sql`, { query: generateCustomerLastPurchaseQuery(customer) }, { headers: { authorization: `Bearer ${getToken()}` } });

@@ -24,6 +24,9 @@ const Navbar = props => (
                 <div className="nav-element">
                     <Link className="nav-link" to="/sales">Sales</Link>
                 </div>
+                <div className="nav-element">
+                    <Link className="nav-link" to="/contacts">Contacts</Link>
+                </div>
             </div>
         </div>
 

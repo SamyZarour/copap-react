@@ -12,6 +12,7 @@ import BrandSearchPage from '../../containers/BrandSearchPage';
 import CustomerSearchPage from '../../containers/CustomerSearchPage';
 import ReportPage from '../../containers/ReportPage';
 import SalesPage from '../../containers/SalesPage';
+import ContactsPage from '../../containers/ContactsPage';
 import NotFound from '../NotFound';
 
 import './Main.scss';
@@ -26,6 +27,7 @@ const Main = props => (
                 <Route exact path="/customer" render={() => props.user ? <CustomerSearchPage /> : <LandingPage />} />
                 <Route exact path="/report" render={() => props.user ? <ReportPage /> : <LandingPage />} />
                 <Route exact path="/sales" render={() => props.user ? <SalesPage /> : <LandingPage />} />
+                <Route exact path="/contacts" render={() => props.user ? <ContactsPage /> : <LandingPage />} />
                 <Route exact path="/admin" render={() => (props.user && props.user.role === 'admin') ? <SignUpPage /> : <Redirect to="/" />} />
                 <Route component={NotFound} />
             </Switch>
