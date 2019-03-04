@@ -15,8 +15,6 @@ const validate = values => {
 
     if (!values.password) {
         errors.password = 'Field is required';
-    } else if (!values.password.match(/^[A-Za-z0-9!@#$%^&*\d]{8,32}$/)) {
-        errors.password = 'Invalid format';
     }
 
     return errors;
