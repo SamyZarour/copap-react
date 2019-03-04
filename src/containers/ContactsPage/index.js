@@ -12,16 +12,30 @@ class ContactsPage extends Component {
     componentWillMount() {
         this.props.resetCustomerInfo();
         this.props.initSearch({ customers: true });
+        this.state = {};
+        this.setCustomer = this.setCustomer.bind(this);
+    }
+
+    setCustomer(customer) {
+        this.setState({ customer });
+        if (customer) this.props.fetchCustomerInfo(customer);
+        else this.props.resetCustomerInfo();
     }
 
     render() {
-        const { customerInfo, customers, fetchCustomerInfo } = this.props;
+        const { customerInfo, customers } = this.props;
         return (
             <div className="ContactsPage">
                 {
                     customerInfo ?
-                        (customerInfo && <Contact {...customerInfo} />) :
-                        <SelectCustomerForm onSubmit={fetchCustomerInfo} customers={customers} />
+                        (this.state.customer && (
+                            <div>
+                                <h1>{customers.length > 0 && customers.find(c => c.value === this.state.customer).label}</h1>
+                                <button type="button" className="cancelButton" onClick={() => this.setCustomer(null)}>Change Customer</button>
+                                <Contact {...customerInfo} />
+                            </div>
+                        )) :
+                        <SelectCustomerForm onSubmit={({ customer }) => this.setCustomer(customer)} customers={customers} />
                 }
             </div>
         );
@@ -37,7 +51,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     initSearch: fields => dispatch(ACTIONS.initSearch(fields)),
     resetCustomerInfo: () => dispatch(ACTIONS.resetCustomerInfo()),
-    fetchCustomerInfo: ({ customer }) => dispatch(ACTIONS.fetchCustomerInfo(customer))
+    fetchCustomerInfo: customer => dispatch(ACTIONS.fetchCustomerInfo(customer))
 });
 
 ContactsPage.propTypes = {
