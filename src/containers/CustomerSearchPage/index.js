@@ -12,6 +12,7 @@ import * as ACTIONS from '../../actions/invoices';
 import * as ACTIONS_SEARCH from '../../actions/search';
 import SearchCustomerForm from '../../forms/SearchCustomerForm';
 import SelectCustomerForm from '../../forms/SelectCustomerForm';
+import CustomPieChart from '../../components/CustomPieChart';
 
 class CustomerSearchPage extends Component {
     constructor(props) {
@@ -19,11 +20,30 @@ class CustomerSearchPage extends Component {
         this.setCustomer = this.setCustomer.bind(this);
         this.setInvoices = this.setInvoices.bind(this);
         this.setSearchCriteria = this.setSearchCriteria.bind(this);
-        this.state = { selectedInvoices: [] };
+        this.state = {
+            // selectedInvoices: []
+            customer: '2031',
+            productType: 'PETROCHEMICAL',
+            selectedInvoices: [
+                {
+                    color: '#e6194b',
+                    label: '5627',
+                    title: '5627',
+                    value: 149118.75
+                },
+                {
+                    color: '#ffe119',
+                    label: '5467',
+                    title: '5467',
+                    value: 28512
+                }
+            ]
+        };
     }
 
     componentWillMount() {
         this.props.initSearch({ customers: true, productTypes: true });
+        this.props.fetchInvoices({ ...this.state, reset: true });
     }
 
     setCustomer(customer) {
@@ -46,6 +66,7 @@ class CustomerSearchPage extends Component {
         const { customer, selectedInvoices } = this.state;
         return (
             <div className="CustomerSearchPage">
+                <CustomPieChart />
                 {
                     customer ?
                         (
