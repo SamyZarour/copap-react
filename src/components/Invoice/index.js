@@ -6,7 +6,6 @@ import './Invoice.scss';
 
 const Invoice = ({
     Client,
-    Commission,
     DueDate,
     InvoiceNo,
     InvoiceDate,
@@ -73,10 +72,6 @@ const Invoice = ({
                 <div className="column value">{moment.utc(DueDate).format('YYYY-MM-DD')}</div>
             </div>
             <div className="row">
-                <div className="column label">Commission</div>
-                <div className="column value">{Commission}</div>
-            </div>
-            <div className="row">
                 <div className="column label">Sales Rep</div>
                 <div className="column value">{SalesRep}</div>
             </div>
@@ -91,7 +86,6 @@ const Invoice = ({
 Invoice.propTypes = {
     InvoiceNo: PropTypes.string.isRequired,
     Client: PropTypes.string.isRequired,
-    Commission: PropTypes.number.isRequired,
     DueDate: PropTypes.string.isRequired,
     InvoiceDate: PropTypes.string.isRequired,
     OrderDate: PropTypes.string.isRequired,

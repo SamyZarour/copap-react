@@ -40,7 +40,7 @@ const SearchIndexForm = props => {
             <form className="form" onSubmit={handleSubmit}>
                 <h2 className="title">Index</h2>
                 <div className="fields">
-                    <Field name="brand" placeholder="Select..." type="text" label="Brands" component={renderFieldSelect} options={brands} autocomplete="brand" />
+                    <Field name="brand" placeholder="Select..." type="text" label="Suppliers" component={renderFieldSelect} options={brands} autocomplete="brand" />
                     <div className="category-columns">
                         <div className="category-column">
                             <Field name="quantityLow" placeholder="From" type="number" label="Quantity" component={renderField} autocomplete="quantityLow" />

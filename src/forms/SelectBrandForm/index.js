@@ -17,9 +17,9 @@ const SelectBrandForm = props => {
     return (
         <div className="SelectBrandForm">
             <form className="form" onSubmit={handleSubmit}>
-                <h2 className="title">Select A Brand</h2>
+                <h2 className="title">Select A Supplier</h2>
                 <div className="fields">
-                    <Field name="brand" placeholder="Select..." type="text" label="Brands" component={renderFieldSelect} options={brands} autocomplete="brand" />
+                    <Field name="brand" placeholder="Select..." type="text" label="Suppliers" component={renderFieldSelect} options={brands} autocomplete="brand" />
                 </div>
                 <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Submit { submitting && <Spinner />}</button>
             </form>

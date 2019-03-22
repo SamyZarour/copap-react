@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 const getReportValues = invoices => invoices.reduce((acc, current) => {
-    const { ProductType, TotalSale, Qty, Commission, ShipFromID, Client, SalesRep } = current;
+    const { ProductType, TotalSale, Qty, ShipFromID, Client, SalesRep } = current;
     return {
         categories: {
             ...acc.categories,
@@ -11,17 +11,16 @@ const getReportValues = invoices => invoices.reduce((acc, current) => {
         },
         totalQty: acc.totalQty + Qty,
         totalValue: acc.totalValue + TotalSale,
-        totalCommission: acc.totalCommission + Commission,
         countries: [...acc.countries, ...(!acc.countries.includes(ShipFromID) ? [ShipFromID] : [])],
         clients: [...acc.clients, ...(!acc.clients.includes(Client) ? [Client] : [])],
         salesRep: SalesRep
     };
-}, { categories: {}, totalQty: 0, totalValue: 0, totalCommission: 0, countries: [], clients: [] });
+}, { categories: {}, totalQty: 0, totalValue: 0, countries: [], clients: [] });
 
 const Report = ({
     invoices
 }) => {
-    const { categories, totalQty, totalValue, totalCommission, countries, clients, salesRep } = getReportValues(invoices);
+    const { categories, totalQty, totalValue, countries, clients, salesRep } = getReportValues(invoices);
 
     return (
         <div className="Report">
@@ -52,10 +51,6 @@ const Report = ({
                 <div className="row">
                     <div className="column label">Value</div>
                     <div className="column value">{Math.round(totalValue * 100) / 100}</div>
-                </div>
-                <div className="row">
-                    <div className="column label">Commission Average</div>
-                    <div className="column value">{Math.round(100 * totalCommission / (invoices.length)) / 100}</div>
                 </div>
                 <div className="row">
                     <div className="column label">Countries</div>
