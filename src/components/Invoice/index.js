@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { formatNumber } from '../../utils';
 import './Invoice.scss';
 
 
@@ -51,20 +52,20 @@ const Invoice = ({
             </div>
             <div className="row">
                 <div className="column label">QTY</div>
-                <div className="column value">{Qty} {QtyUom || ''}</div>
+                <div className="column value">{formatNumber(Qty || 0)} {QtyUom || ''}</div>
             </div>
             <div className="row">
                 <div className="column label">Sales Price</div>
-                <div className="column value">{TotalSale} {PriceUomSale || ''}</div>
+                <div className="column value">{formatNumber(TotalSale || 0)} {PriceUomSale || ''}</div>
             </div>
             <div className="row">
                 <div className="column label">Sales Price Per Unit</div>
-                <div className="column value">{PriceSale} {PriceUomSale || ''} {CurrencySale || ''}</div>
+                <div className="column value">{formatNumber(PriceSale || 0)} {PriceUomSale || ''} {CurrencySale || ''}</div>
             </div>
-            { PriceBuy && PriceUomBuy && CurrencyBuy && (
+            { !!PriceBuy && PriceUomBuy && CurrencyBuy && (
                 <div className="row">
                     <div className="column label">Buying Price Per Unit</div>
-                    <div className="column value">{PriceBuy} {PriceUomBuy || ''} {CurrencyBuy || ''}</div>
+                    <div className="column value">{formatNumber(PriceBuy || 0)} {PriceUomBuy || ''} {CurrencyBuy || ''}</div>
                 </div>
             )}
             <div className="row">

@@ -6,7 +6,7 @@ const env = process.env.NODE_ENV;
 
 // Dev Configs
 const development = {
-    url: process.env.REACT_APP_DEV_DB_URL || 'http://localhost:3000'
+    url: process.env.REACT_APP_DEV_DB_URL || 'http://159.203.176.70:3000'
 };
 
 // Test Configs

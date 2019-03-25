@@ -44,3 +44,5 @@ export const getColorFromHTTPCode = code => {
             return { backgroundColor: '#ccc', color: 'white' };
     }
 };
+
+export const formatNumber = num => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
