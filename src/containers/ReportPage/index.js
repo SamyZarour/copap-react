@@ -55,15 +55,35 @@ class ReportPage extends Component {
 
         return (
             <div className="ReportPage">
-                <div>
-                    <div>
-                        <Select placeholder="Date Range..." onChange={this.setDateRange} value={range} options={Object.keys(RANGE_LABELS).map(value => ({ label: RANGE_LABELS[value], value }))} />
-                        { isAdmin && <Select placeholder="Select Agent..." onChange={this.setTrader} value={trader} options={traders} /> }
-                        <div className="reportResult">
-                            { (!trader && isAdmin) && <div>Please choose a trader</div> }
-                            { (trader || !isAdmin) && (((isBusy || !isFetched)) ? <Spinner /> : <Report invoices={invoices} />)}
-                        </div>
-                    </div>
+                <Select
+                    className="inputSelector"
+                    placeholder="Date Range..."
+                    onChange={this.setDateRange}
+                    value={range}
+                    options={Object.keys(RANGE_LABELS).map(value => ({ label: RANGE_LABELS[value], value }))}
+                    styles={({
+                        control: provided => ({ ...provided, 'font-size': '14px' }),
+                        option: provided => ({ ...provided, 'font-size': '14px' })
+                    })}
+                />
+                {
+                    isAdmin && (
+                        <Select
+                            className="inputSelector inputSelectorAgent"
+                            placeholder="Select Agent..."
+                            onChange={this.setTrader}
+                            value={trader}
+                            options={traders}
+                            styles={({
+                                control: provided => ({ ...provided, 'font-size': '14px' }),
+                                option: provided => ({ ...provided, 'font-size': '14px' })
+                            })}
+                        />
+                    )
+                }
+                <div className="reportResult">
+                    { (!trader && isAdmin) && <div>Please choose a trader</div> }
+                    { (trader || !isAdmin) && (((isBusy || !isFetched)) ? <Spinner /> : <Report invoices={invoices} />)}
                 </div>
             </div>
         );

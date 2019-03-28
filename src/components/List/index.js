@@ -30,7 +30,7 @@ class List extends Component {
             <div className="list">
                 {
                     (() => {
-                        if (!isBusy && list.length === 0) { return <div>No Items</div>; }
+                        if (!isBusy && list.length === 0) { return <div className="noItems">No Items</div>; }
                         return list.map(item => <ListItem {...item} key={item.InvoiceNo} />);
                     })()
                 }

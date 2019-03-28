@@ -3,40 +3,51 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo';
 import ButtonSignOut from '../ButtonSignOut';
-import { getToken, checkNested } from '../../utils';
+import { getToken } from '../../utils';
 import './Navbar.scss';
 
-const Navbar = props => (
+const Navbar = ({ username }) => (
     <div className="Navbar">
+        <nav className="navbar navbar-expand-lg navbar-light">
+            <Logo />
+            <button
+                className="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span className="navbar-toggler-icon"></span>
+            </button>
 
-        <div className="nav-item">
-            <div className="nav-left">
-                <Logo />
-                <div className="nav-element">
-                    <Link className="nav-link" to="/brand">Supplier</Link>
-                </div>
-                <div className="nav-element">
-                    <Link className="nav-link" to="/customer">Customer</Link>
-                </div>
-                <div className="nav-element">
-                    <Link className="nav-link" to="/report">Report</Link>
-                </div>
-                <div className="nav-element">
-                    <Link className="nav-link" to="/sales">Sales</Link>
-                </div>
-                <div className="nav-element">
-                    <Link className="nav-link" to="/contacts">Contacts</Link>
-                </div>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/brand">Supplier</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/customer">Customer</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/report">Report</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/sales">Sales</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/contacts">Contacts</Link>
+                    </li>
+                </ul>
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                        { getToken() && username && <span className="navUsername"> {username} </span> }
+                        { getToken() && <ButtonSignOut /> }
+                    </li>
+                </ul>
             </div>
-        </div>
-
-        <div className="nav-item">
-            <div className="nav-right">
-                { getToken() && checkNested(props, 'username') && <span className="navUsername"> {props.username} </span> }
-                { getToken() && <ButtonSignOut /> }
-            </div>
-        </div>
-
+        </nav>
     </div>
 );
 

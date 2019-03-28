@@ -18,3 +18,10 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  /* For mobile phones: */
+  .Invoice{
+    font-size: 12px;
+  }
+}
