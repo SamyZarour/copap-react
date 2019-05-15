@@ -1,5 +1,13 @@
 .IndexForm{
   .form{
     max-width: 800px;
+
+    .form-buttons{
+      display: flex;
+
+      button{
+        flex: 1;
+      }
+    }
   }
 }

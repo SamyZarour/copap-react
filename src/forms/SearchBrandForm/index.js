@@ -41,7 +41,8 @@ const SearchBrandForm = props => {
         submitting,
         pristine,
         customers,
-        productTypes
+        productTypes,
+        reset
     } = props;
 
     return (
@@ -77,7 +78,10 @@ const SearchBrandForm = props => {
                     </div>
                     <Field name="customer" placeholder="Select..." type="text" label="Customer" component={renderFieldSelect} options={customers} autocomplete="customer" />
                 </div>
-                <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Submit { submitting && <Spinner />}</button>
+                <div className="form-buttons">
+                    <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Submit { submitting && <Spinner />}</button>
+                    <button className="cancelButton" type="button" disabled={submitting} onClick={reset}>Reset</button>
+                </div>
             </form>
         </div>
     );
@@ -89,7 +93,8 @@ SearchBrandForm.propTypes = {
     submitting: PropTypes.bool.isRequired,
     pristine: PropTypes.bool.isRequired,
     customers: PropTypes.arrayOf(PropTypes.object).isRequired,
-    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired
+    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    reset: PropTypes.func.isRequired
 };
 
 export default reduxForm({ form: 'SearchBrandForm', validate })(SearchBrandForm);

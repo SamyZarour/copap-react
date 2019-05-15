@@ -16,8 +16,7 @@ const Contact = ({
     Email,
     Addr1,
     Addr2,
-    Addr3,
-    Role
+    Addr3
 }) => (
     <div className="Contact">
         <div className="rows">
@@ -43,10 +42,6 @@ const Contact = ({
             <div className="row">
                 <div className="column label">Contact Person</div>
                 <div className="column value">{ContactNm}</div>
-            </div>
-            <div className="row">
-                <div className="column label">Position</div>
-                <div className="column value">{Role}</div>
             </div>
             <div className="row">
                 <div className="column label">Phone Business</div>
@@ -79,7 +74,6 @@ Contact.propTypes = {
     PhoneBusiness: PropTypes.string.isRequired,
     PhoneMobile: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Role: PropTypes.string.isRequired,
     LastPurchase: PropTypes.string.isRequired,
     ProductTypes: PropTypes.arrayOf(PropTypes.string).isRequired
 };

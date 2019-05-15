@@ -32,7 +32,8 @@ const SearchIndexForm = props => {
         brands,
         customers,
         destinationCountries,
-        productTypes
+        productTypes,
+        reset
     } = props;
 
     return (
@@ -71,7 +72,10 @@ const SearchIndexForm = props => {
                         </div>
                     </div>
                 </div>
-                <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Submit { submitting && <Spinner />}</button>
+                <div className="form-buttons">
+                    <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Submit { submitting && <Spinner />}</button>
+                    <button className="cancelButton" type="button" disabled={submitting} onClick={reset}>Reset</button>
+                </div>
             </form>
         </div>
     );
@@ -85,7 +89,8 @@ SearchIndexForm.propTypes = {
     brands: PropTypes.arrayOf(PropTypes.object).isRequired,
     customers: PropTypes.arrayOf(PropTypes.object).isRequired,
     destinationCountries: PropTypes.arrayOf(PropTypes.object).isRequired,
-    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired
+    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    reset: PropTypes.func.isRequired
 };
 
 export default reduxForm({ form: 'SearchIndexForm', validate })(SearchIndexForm);
