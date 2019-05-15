@@ -23,6 +23,7 @@ const Invoice = ({
     TotalSale,
     Supplier,
     SalesRep,
+    BuyRep,
     ContactPoint
 }) => (
     <div className="Invoice">
@@ -77,6 +78,10 @@ const Invoice = ({
                 <div className="column value">{SalesRep}</div>
             </div>
             <div className="row">
+                <div className="column label">Sales Rep 2</div>
+                <div className="column value">{BuyRep}</div>
+            </div>
+            <div className="row">
                 <div className="column label">Contact Point</div>
                 <div className="column value">{ContactPoint}</div>
             </div>
@@ -102,6 +107,7 @@ Invoice.propTypes = {
     TotalSale: PropTypes.number.isRequired,
     Supplier: PropTypes.string.isRequired,
     SalesRep: PropTypes.string.isRequired,
+    BuyRep: PropTypes.string.isRequired,
     ContactPoint: PropTypes.string.isRequired
 };
 
