@@ -5,7 +5,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userSelector } from '../../selectors/auth';
 import { invoicesSelector } from '../../selectors/invoices';
-import { brandsSelector, customersSelector, productTypesSelector } from '../../selectors/search';
+import {
+    brandsSelector,
+    customersSelector,
+    destinationCountriesSelector,
+    productTypesSelector
+} from '../../selectors/search';
 import List from '../../components/List';
 import Invoice from '../../components/Invoice';
 import * as ACTIONS from '../../actions/invoices';
@@ -23,7 +28,7 @@ class BrandSearchPage extends Component {
     }
 
     componentWillMount() {
-        this.props.initSearch({ brands: true, customers: true, productTypes: true });
+        this.props.initSearch({ brands: true, customers: true, productTypes: true, destinationCountries: true });
     }
 
     setBrand(brand) {
@@ -44,7 +49,7 @@ class BrandSearchPage extends Component {
     }
 
     render() {
-        const { invoices: { invoices, totalCount, isBusy, isEnd }, brands, customers, productTypes } = this.props;
+        const { invoices: { invoices, totalCount, isBusy, isEnd }, brands, customers, productTypes, destinationCountries } = this.props;
         return (
             <div className="BrandSearchPage">
                 {
@@ -53,7 +58,7 @@ class BrandSearchPage extends Component {
                             <div>
                                 <h1>{brands.length > 0 && brands.find(brand => brand.value === this.state.brand).label}</h1>
                                 <button type="button" className="cancelButton" onClick={() => this.setBrand({ brand: undefined })}>Change Brand</button>
-                                <SearchBrandForm onSubmit={this.setSearchCriteria} customers={customers} productTypes={productTypes} />
+                                <SearchBrandForm onSubmit={this.setSearchCriteria} customers={customers} productTypes={productTypes} destinationCountries={destinationCountries} />
                                 { invoices.length > 0 && <h3>Found {totalCount} Invoices</h3> }
                                 <List isEnd={isEnd} isBusy={isBusy} list={invoices} ListItem={Invoice} onPaginatedSearch={this.getNextPage} />
                             </div>
@@ -70,7 +75,8 @@ const mapStateToProps = state => ({
     invoices: invoicesSelector(state),
     brands: brandsSelector(state),
     customers: customersSelector(state),
-    productTypes: productTypesSelector(state)
+    productTypes: productTypesSelector(state),
+    destinationCountries: destinationCountriesSelector(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -92,7 +98,8 @@ BrandSearchPage.propTypes = {
     }).isRequired,
     brands: PropTypes.arrayOf(PropTypes.object).isRequired,
     customers: PropTypes.arrayOf(PropTypes.object).isRequired,
-    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired
+    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    destinationCountries: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BrandSearchPage));

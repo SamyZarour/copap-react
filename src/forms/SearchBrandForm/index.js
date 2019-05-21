@@ -42,6 +42,7 @@ const SearchBrandForm = props => {
         pristine,
         customers,
         productTypes,
+        destinationCountries,
         reset
     } = props;
 
@@ -68,6 +69,8 @@ const SearchBrandForm = props => {
                     </div>
                     <Field name="invoiceNumber" placeholder="Invoice Number" type="number" label="Invoice Number" component={renderField} autocomplete="invoiceNumber" />
                     <Field name="invoiceType" placeholder="Select..." type="text" label="Invoice Status" component={renderFieldSelect} options={invoiceOptions} autocomplete="invoiceType" />
+                    <Field name="poNumber" placeholder="PO Number" type="number" label="PO Number" component={renderField} autocomplete="poNumber" />
+                    <Field name="soNumber" placeholder="SO Number" type="number" label="SO Number" component={renderField} autocomplete="soNumber" />
                     <div className="category-columns">
                         <div className="category-column">
                             <Field name="valueLow" placeholder="From" type="number" label="Quantity" component={renderField} autocomplete="valueLow" />
@@ -77,6 +80,7 @@ const SearchBrandForm = props => {
                         </div>
                     </div>
                     <Field name="customer" placeholder="Select..." type="text" label="Customer" component={renderFieldSelect} options={customers} autocomplete="customer" />
+                    <Field name="destinationCountry" placeholder="Select..." type="text" label="Destination Country" component={renderFieldSelect} options={destinationCountries} autocomplete="destinationCountry" />
                 </div>
                 <div className="form-buttons">
                     <button className="successButton" type="submit" disabled={pristine || invalid || submitting}>Submit { submitting && <Spinner />}</button>
@@ -94,6 +98,7 @@ SearchBrandForm.propTypes = {
     pristine: PropTypes.bool.isRequired,
     customers: PropTypes.arrayOf(PropTypes.object).isRequired,
     productTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    destinationCountries: PropTypes.arrayOf(PropTypes.object).isRequired,
     reset: PropTypes.func.isRequired
 };
 
