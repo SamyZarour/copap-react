@@ -31,9 +31,10 @@ class CustomerSearchPage extends Component {
     }
 
     setSearchCriteria(criteria) {
+        const { user: { username, role } } = this.props;
         const newState = { ...this.state, ...criteria };
         this.setState(newState);
-        const query = { ...newState, isAdmin: this.props.user.role === 'admin' };
+        const query = { ...newState, userId: username, isAdmin: role === 'admin' };
         this.props.fetchInvoices({ ...query, reset: true });
     }
 
