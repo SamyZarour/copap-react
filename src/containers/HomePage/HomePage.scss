@@ -1,14 +1,18 @@
 .HomePage{
-  text-align: center;
+  text-align: left;
   font-size: 2em;
 
-  .search{
-    margin-bottom: 50px;
+  .welcome{
+    width: 100%;
+    text-align: center;
   }
 
-  .spinner{
-    width: 100px;
-    height: 100px;
-    margin: auto;
+  .Cards{
+    display: flex;
+    flex-wrap: wrap;
+
+    .Card{
+      flex: 1;
+    }
   }
 }

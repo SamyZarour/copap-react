@@ -1,0 +1,31 @@
+.Card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: #FFF;
+  width: 300px;
+  padding: 30px;
+  margin: 30px;
+  color: #000;
+  display: inline-block;
+  text-align: center;
+  
+  & > a {
+    color: #000;
+
+    &:hover{
+      text-decoration: none;
+      color: #000;
+    }
+  }
+
+  &:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+    cursor: pointer;
+  }
+
+  .categoryName{
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+}
