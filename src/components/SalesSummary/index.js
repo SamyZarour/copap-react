@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatNumber } from '../../utils';
 import './style.scss';
 
 const getSalesSummaryValues = invoices => invoices.reduce((acc, current) => {
@@ -26,19 +27,19 @@ const SalesSummary = ({
     return (
         <div className="SalesSummary">
             <div className="rows">
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">A/R Summary</div>
-                    <div className="column value">{Math.round(arSummary * 100) / 100} $</div>
+                    <div className="column value">{formatNumber(Math.round(arSummary * 100) / 100)} $</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Sales</div>
-                    <div className="column value">{Math.round(sales * 100) / 100} $</div>
+                    <div className="column value">{formatNumber(Math.round(sales * 100) / 100)} $</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Purchases</div>
-                    <div className="column value">{Math.round(purchases * 100) / 100} $</div>
+                    <div className="column value">{formatNumber(Math.round(purchases * 100) / 100)} $</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Open Shipments</div>
                     <div className="column value">{shippedNotPaid}</div>
                 </div>

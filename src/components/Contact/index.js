@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { formatNumber } from '../../utils';
 import './style.scss';
 
 
@@ -27,27 +28,27 @@ const Contact = ({
                 <div className="column label">Product Types</div>
                 <div className="column value">{ProductTypes.join(', ')}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Quantity</div>
-                <div className="column value">{TotalQty}</div>
+                <div className="column value">{formatNumber(TotalQty)}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Last Purchase</div>
                 <div className="column value">{moment.utc(LastPurchase).format('YYYY-MM-DD')}</div>
             </div>
             <div className="row">
                 <div className="column label">Address</div>
-                <div className="column value">{`${Addr1}\n${Addr2}\n${Addr3}`}</div>
+                <div className="column value">{`${Addr1 || ''}\n${Addr2 || ''}\n${Addr3 || ''}`}</div>
             </div>
             <div className="row">
                 <div className="column label">Contact Person</div>
                 <div className="column value">{ContactNm}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Phone Business</div>
                 <div className="column value">{PhoneBusiness}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Phone Mobile</div>
                 <div className="column value">{PhoneMobile}</div>
             </div>
@@ -55,9 +56,9 @@ const Contact = ({
                 <div className="column label">Email</div>
                 <div className="column value">{Email}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">AmountPaid</div>
-                <div className="column value">{TotalSale}</div>
+                <div className="column value">{formatNumber(TotalSale)}</div>
             </div>
         </div>
     </div>

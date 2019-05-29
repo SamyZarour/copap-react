@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatNumber } from '../../utils';
 import './style.scss';
 
 const getReportValues = invoices => invoices.reduce((acc, current) => {
@@ -24,7 +25,7 @@ const Report = ({
     return (
         <div className="Report">
             <div className="rows">
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Product Types</div>
                     <div className="column value">{Object.keys(categories).length}</div>
                 </div>
@@ -32,30 +33,30 @@ const Report = ({
                     <div className="column label">Categories</div>
                     <div className="column">
                         { Object.keys(categories).map(category => (
-                            <div className="row category" key={category}>
+                            <div className="row category numberValue" key={category}>
                                 <div className="column label">{category}</div>
                                 <div className="column value">{Math.round(10000 * categories[category] / totalValue) / 100}%</div>
                             </div>
                         )) }
                     </div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">QTY</div>
-                    <div className="column value">{Math.round(totalQty * 100) / 100}</div>
+                    <div className="column value">{formatNumber(Math.round(totalQty * 100) / 100)}</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Invoice Amount</div>
                     <div className="column value">{invoices.length}</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Value</div>
-                    <div className="column value">{Math.round(totalValue * 100) / 100}</div>
+                    <div className="column value">{formatNumber(Math.round(totalValue * 100) / 100)}</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Countries</div>
                     <div className="column value">{countries.length}</div>
                 </div>
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Clients Amount</div>
                     <div className="column value">{clients.length}</div>
                 </div>

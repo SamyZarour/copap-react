@@ -37,7 +37,6 @@ const renderLabel = total => content => {
             dominantBaseline="central"
         >
             {`${label} : ${Math.floor(10000 * value / total) / 100}%`}
-            { console.log(total) }
         </text>
     );
 };
@@ -94,7 +93,6 @@ class PieChartReport extends Component {
         const { values, categoryOptions, valueOptions, selectedCategory, selectedValue } = this.state;
         const data = this.getDataByType(values, selectedCategory, selectedValue);
         const totalValue = data.reduce((acc, current) => acc + current.value, 0);
-        console.log(totalValue);
         const empty = this.isEmpty(values, selectedCategory, selectedValue);
 
         const { width } = this.props.size;
