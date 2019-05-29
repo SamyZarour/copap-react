@@ -39,13 +39,25 @@ class BrandSearchPage extends Component {
         const { user: { username, role } } = this.props;
         const newState = { ...this.state, ...criteria };
         this.setState(newState);
-        const query = { ...newState, userId: username, isAdmin: role === 'admin', page: 1 };
+        const isAdmin = role === 'admin';
+        const query = {
+            ...newState,
+            ...(isAdmin ? {} : { userId: username }),
+            isAdmin,
+            page: 1
+        };
         this.props.fetchInvoices({ ...query, reset: true });
     }
 
     getNextPage() {
-        const { invoices: { page }, user: { role } } = this.props;
-        this.props.fetchInvoices({ ...this.state, isAdmin: role === 'admin', page: page + 1 });
+        const { invoices: { page }, user: { username, role } } = this.props;
+        const isAdmin = role === 'admin';
+        this.props.fetchInvoices({
+            ...this.state,
+            ...(isAdmin ? {} : { userId: username }),
+            isAdmin,
+            page: page + 1
+        });
     }
 
     render() {

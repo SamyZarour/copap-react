@@ -36,8 +36,15 @@ class ReportPage extends Component {
     }
 
     setDateRange(range) {
-        const { fetchInvoices } = this.props;
-        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: this.props.user.username, isPaged: false, reset: true });
+        const { user: { role, username }, fetchInvoices } = this.props;
+        const { trader } = this.state;
+        const isAdmin = role === 'admin';
+        const userId = isAdmin ? trader : username;
+
+        if (userId) {
+            fetchInvoices({ orderDateFrom: getDateRange(range.value), userId, isPaged: false, reset: true });
+        }
+
         this.setState({ range });
     }
 
@@ -70,7 +77,7 @@ class ReportPage extends Component {
                 {
                     isAdmin && (
                         <Select
-                            className="inputSelector inputSelectorAgent"
+                            className="inputSelector"
                             placeholder="Select Agent..."
                             onChange={this.setTrader}
                             value={trader}

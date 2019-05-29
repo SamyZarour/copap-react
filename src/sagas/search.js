@@ -38,7 +38,11 @@ export function* initSearchAsync(action) {
 
         if (productTypes) {
             const responseProductTypes = yield call(API.getProductTypes, action.payload);
-            const resultProductTypes = responseProductTypes.data && responseProductTypes.data.recordset && responseProductTypes.data.recordset.map(item => ({ label: item.ProductType.trim(), value: item.ProductType.trim() }));
+            const resultProductTypes = responseProductTypes.data &&
+                responseProductTypes.data.recordset &&
+                responseProductTypes.data.recordset
+                    .map(item => ({ label: item.ProductType.trim(), value: item.ProductType.trim() }))
+                    .filter(productType => productType.label && productType.value);
             yield put(ACTIONS.fetchProductTypesSuccess(resultProductTypes));
         }
 

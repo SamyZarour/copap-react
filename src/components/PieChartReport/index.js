@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { PieChart, Pie, Tooltip } from 'recharts';
 import Select from 'react-select';
+import sizeMe from 'react-sizeme';
 import { getColor } from '../../utils.js';
 import './style.scss';
 
@@ -50,7 +51,7 @@ class PieChartReport extends Component {
                 { label: 'Countries', value: 'countries' }
             ],
             valueOptions: [
-                { label: 'Value', value: 'value' },
+                { label: 'Monetary', value: 'monetary' },
                 { label: 'Quantity', value: 'quantity' }
             ]
         };
@@ -68,14 +69,14 @@ class PieChartReport extends Component {
                 ...acc.countries,
                 [ShipFromID]: {
                     quantity: (acc.countries[ShipFromID] && acc.countries[ShipFromID].quantity) || 0 + Qty,
-                    value: (acc.countries[ShipFromID] && acc.countries[ShipFromID].value) || 0 + TotalSale
+                    monetary: (acc.countries[ShipFromID] && acc.countries[ShipFromID].monetary) || 0 + TotalSale
                 }
             },
             clients: {
                 ...acc.clients,
                 [Client]: {
                     quantity: (acc.clients[Client] && acc.clients[Client].quantity) || 0 + Qty,
-                    value: (acc.clients[Client] && acc.clients[Client].value) || 0 + TotalSale
+                    monetary: (acc.clients[Client] && acc.clients[Client].monetary) || 0 + TotalSale
                 }
             }
         };
@@ -95,6 +96,9 @@ class PieChartReport extends Component {
         const totalValue = data.reduce((acc, current) => acc + current.value, 0);
         console.log(totalValue);
         const empty = this.isEmpty(values, selectedCategory, selectedValue);
+
+        const { width } = this.props.size;
+        const pieHeight = Math.min(width, 500);
 
         return (
             <div className="PieChartReport">
@@ -123,14 +127,14 @@ class PieChartReport extends Component {
                     />
                 </div>
                 { empty && <div className="promptUserPieChart">Please Chose Category and Value type</div> }
-                <PieChart className="pieChart" width={800} height={600}>
+                <PieChart className="pieChart" width={width} height={pieHeight}>
                     <Pie
                         dataKey="value"
                         isAnimationActive={false}
                         data={data}
-                        cx={400}
-                        cy={300}
-                        outerRadius={200}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={pieHeight / 3}
                         label={!empty && renderLabel(totalValue)}
                     />
                     { !empty && <Tooltip content={renderToolTip} /> }
@@ -141,7 +145,8 @@ class PieChartReport extends Component {
 }
 
 PieChartReport.propTypes = {
-    invoices: PropTypes.arrayOf(PropTypes.object).isRequired
+    invoices: PropTypes.arrayOf(PropTypes.object).isRequired,
+    size: PropTypes.any.isRequired
 };
 
-export default PieChartReport;
+export default sizeMe()(PieChartReport);
