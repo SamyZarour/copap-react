@@ -45,4 +45,18 @@ export const getColorFromHTTPCode = code => {
     }
 };
 
+export const getColor = i => {
+    const colors = [
+        '#F44336',
+        '#607D8B',
+        '#9C27B0',
+        '#4CAF50',
+        '#E91E63',
+        '#3F51B5',
+        '#FF9800',
+        '#00BCD4'
+    ];
+    return colors[i % colors.length];
+};
+
 export const formatNumber = num => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');

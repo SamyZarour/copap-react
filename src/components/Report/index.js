@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './style.scss';
 
 const getReportValues = invoices => invoices.reduce((acc, current) => {
-    const { ProductType, TotalSale, Qty, ShipFromID, Client, SalesRep } = current;
+    const { ProductType, TotalSale, Qty, ShipFromID, Client } = current;
     return {
         categories: {
             ...acc.categories,
@@ -12,15 +12,14 @@ const getReportValues = invoices => invoices.reduce((acc, current) => {
         totalQty: acc.totalQty + Qty,
         totalValue: acc.totalValue + TotalSale,
         countries: [...acc.countries, ...(!acc.countries.includes(ShipFromID) ? [ShipFromID] : [])],
-        clients: [...acc.clients, ...(!acc.clients.includes(Client) ? [Client] : [])],
-        salesRep: SalesRep
+        clients: [...acc.clients, ...(!acc.clients.includes(Client) ? [Client] : [])]
     };
 }, { categories: {}, totalQty: 0, totalValue: 0, countries: [], clients: [] });
 
 const Report = ({
     invoices
 }) => {
-    const { categories, totalQty, totalValue, countries, clients, salesRep } = getReportValues(invoices);
+    const { categories, totalQty, totalValue, countries, clients } = getReportValues(invoices);
 
     return (
         <div className="Report">
@@ -59,10 +58,6 @@ const Report = ({
                 <div className="row">
                     <div className="column label">Clients Amount</div>
                     <div className="column value">{clients.length}</div>
-                </div>
-                <div className="row">
-                    <div className="column label">Sales Rep</div>
-                    <div className="column value">{salesRep}</div>
                 </div>
             </div>
         </div>

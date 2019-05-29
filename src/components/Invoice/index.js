@@ -15,11 +15,9 @@ const Invoice = ({
     PriceUomBuy,
     CurrencyBuy,
     PriceSale,
-    PriceUomSale,
     CurrencySale,
     ProductType,
     Qty,
-    QtyUom,
     TotalSale,
     Supplier,
     SalesRep,
@@ -35,11 +33,11 @@ const Invoice = ({
                 <div className="column label">Client</div>
                 <div className="column value">{Client}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Order Date</div>
                 <div className="column value">{moment.utc(OrderDate).format('YYYY-MM-DD')}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Invoice Date</div>
                 <div className="column value">{moment.utc(InvoiceDate).format('YYYY-MM-DD')}</div>
             </div>
@@ -51,25 +49,25 @@ const Invoice = ({
                 <div className="column label">Supplier</div>
                 <div className="column value">{Supplier}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">QTY</div>
-                <div className="column value">{formatNumber(Qty || 0)} {QtyUom || ''}</div>
+                <div className="column value">{formatNumber(Qty || 0)}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Sales Price</div>
-                <div className="column value">{formatNumber(TotalSale || 0)} {PriceUomSale || ''}</div>
+                <div className="column value">{formatNumber(TotalSale || 0)} {CurrencySale || ''}</div>
             </div>
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Sales Price Per Unit</div>
-                <div className="column value">{formatNumber(PriceSale || 0)} {PriceUomSale || ''} {CurrencySale || ''}</div>
+                <div className="column value">{formatNumber(PriceSale || 0)} {CurrencySale || ''}</div>
             </div>
             { !!PriceBuy && PriceUomBuy && CurrencyBuy && (
-                <div className="row">
+                <div className="row numberValue">
                     <div className="column label">Buying Price Per Unit</div>
-                    <div className="column value">{formatNumber(PriceBuy || 0)} {PriceUomBuy || ''} {CurrencyBuy || ''}</div>
+                    <div className="column value">{formatNumber(PriceBuy || 0)} {CurrencyBuy || ''}</div>
                 </div>
             )}
-            <div className="row">
+            <div className="row numberValue">
                 <div className="column label">Due Date</div>
                 <div className="column value">{moment.utc(DueDate).format('YYYY-MM-DD')}</div>
             </div>
@@ -96,14 +94,12 @@ Invoice.propTypes = {
     InvoiceDate: PropTypes.string.isRequired,
     OrderDate: PropTypes.string.isRequired,
     PriceSale: PropTypes.number.isRequired,
-    PriceUomSale: PropTypes.string.isRequired,
     CurrencySale: PropTypes.string.isRequired,
     PriceBuy: PropTypes.number,
     PriceUomBuy: PropTypes.string,
     CurrencyBuy: PropTypes.string,
     ProductType: PropTypes.string.isRequired,
     Qty: PropTypes.number.isRequired,
-    QtyUom: PropTypes.string.isRequired,
     TotalSale: PropTypes.number.isRequired,
     Supplier: PropTypes.string.isRequired,
     SalesRep: PropTypes.string.isRequired,

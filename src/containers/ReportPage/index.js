@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './style.scss';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,6 +12,8 @@ import * as ACTIONS from '../../actions/invoices';
 import * as ACTIONS_SEARCH from '../../actions/search';
 import Spinner from '../../components/Spinner';
 import Report from '../../components/Report';
+import PieChartReport from '../../components/PieChartReport';
+import './style.scss';
 
 class ReportPage extends Component {
     constructor(props) {
@@ -83,7 +84,14 @@ class ReportPage extends Component {
                 }
                 <div className="reportResult">
                     { (!trader && isAdmin) && <div>Please choose a trader</div> }
-                    { (trader || !isAdmin) && (((isBusy || !isFetched)) ? <Spinner /> : <Report invoices={invoices} />)}
+                    { (trader || !isAdmin) && (
+                        (isBusy || !isFetched) ? <Spinner /> : (
+                            <div>
+                                <Report invoices={invoices} />
+                                <PieChartReport invoices={invoices} />
+                            </div>
+                        )
+                    )}
                 </div>
             </div>
         );

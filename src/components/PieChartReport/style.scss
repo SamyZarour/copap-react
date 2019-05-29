@@ -1,0 +1,26 @@
+.PieChartReport{
+    .typeSelector{
+        max-width: 200px;
+        margin: 0 auto 10px;
+    }
+    
+    .pieChart{
+        margin: 0 auto;
+    }
+
+    .toolTip{
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        border: 1px solid #AAA;
+    }
+
+    .pieLabel{
+        font-size: .5em;
+    }
+
+    .promptUserPieChart{
+        margin-bottom: -70px;
+        margin-top: 22px;
+    }
+}
