@@ -30,7 +30,7 @@ const Contact = ({
             </div>
             <div className="row numberValue">
                 <div className="column label">Quantity</div>
-                <div className="column value">{formatNumber(TotalQty)}</div>
+                <div className="column value">{formatNumber(TotalQty || 0)}</div>
             </div>
             <div className="row numberValue">
                 <div className="column label">Last Purchase</div>
@@ -58,7 +58,7 @@ const Contact = ({
             </div>
             <div className="row numberValue">
                 <div className="column label">AmountPaid</div>
-                <div className="column value">{formatNumber(TotalSale)}</div>
+                <div className="column value">{formatNumber(TotalSale || 0)}</div>
             </div>
         </div>
     </div>

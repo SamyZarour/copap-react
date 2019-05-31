@@ -29,15 +29,15 @@ const SalesSummary = ({
             <div className="rows">
                 <div className="row numberValue">
                     <div className="column label">A/R Summary</div>
-                    <div className="column value">{formatNumber(Math.round(arSummary * 100) / 100)} $</div>
+                    <div className="column value">{formatNumber((Math.round(arSummary * 100) / 100) || 0)} $</div>
                 </div>
                 <div className="row numberValue">
                     <div className="column label">Sales</div>
-                    <div className="column value">{formatNumber(Math.round(sales * 100) / 100)} $</div>
+                    <div className="column value">{formatNumber((Math.round(sales * 100) / 100) || 0)} $</div>
                 </div>
                 <div className="row numberValue">
                     <div className="column label">Purchases</div>
-                    <div className="column value">{formatNumber(Math.round(purchases * 100) / 100)} $</div>
+                    <div className="column value">{formatNumber((Math.round(purchases * 100) / 100) || 0)} $</div>
                 </div>
                 <div className="row numberValue">
                     <div className="column label">Open Shipments</div>

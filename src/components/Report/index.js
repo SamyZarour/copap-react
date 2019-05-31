@@ -42,7 +42,7 @@ const Report = ({
                 </div>
                 <div className="row numberValue">
                     <div className="column label">QTY</div>
-                    <div className="column value">{formatNumber(Math.round(totalQty * 100) / 100)}</div>
+                    <div className="column value">{formatNumber((Math.round(totalQty * 100) / 100) || 0)}</div>
                 </div>
                 <div className="row numberValue">
                     <div className="column label">Invoice Amount</div>
@@ -50,7 +50,7 @@ const Report = ({
                 </div>
                 <div className="row numberValue">
                     <div className="column label">Value</div>
-                    <div className="column value">{formatNumber(Math.round(totalValue * 100) / 100)}</div>
+                    <div className="column value">{formatNumber((Math.round(totalValue * 100) / 100) || 0)}</div>
                 </div>
                 <div className="row numberValue">
                     <div className="column label">Countries</div>

@@ -59,4 +59,4 @@ export const getColor = i => {
     return colors[i % colors.length];
 };
 
-export const formatNumber = num => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+export const formatNumber = (num = 0) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
