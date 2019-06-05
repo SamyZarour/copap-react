@@ -2,7 +2,6 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
-import moment from 'moment';
 
 export const renderField = config => {
     const {
@@ -138,6 +137,7 @@ export const renderFieldDatePicker = config => {
         label,
         placeholder,
         readOnly,
+        widthLayout,
         meta: {
             touched,
             error,
@@ -145,11 +145,22 @@ export const renderFieldDatePicker = config => {
         }
     } = config;
 
+    const withPortal = widthLayout < 450;
+
     return (
         <div className="field">
             { label && <label className="field-label">{isRequired && <span className="required-indicator">*</span>}{label}</label> }
             <div className="field-date-picker">
-                <DatePicker {...input} dateForm="MM/DD/YYYY" value={input.value ? moment(input.value).format('MM/DD/YYYY') : null} placeholderText={placeholder} disabled={readOnly} />
+                <DatePicker
+                    {...input}
+                    onChangeRaw={input.onChange}
+                    dateForm="MM/DD/YYYY"
+                    selected={input.value ? new Date(input.value) : null}
+                    placeholderText={placeholder}
+                    disabled={readOnly}
+                    autoComplete="off"
+                    withPortal={withPortal}
+                />
                 {touched && ((error && <span className="error">{error}</span>) || (warning && <span className="warning">{warning}</span>))}
                 <i className="fa fa-calendar"></i>
             </div>

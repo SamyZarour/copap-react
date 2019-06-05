@@ -138,3 +138,12 @@
     }
   }
 }
+
+@media only screen and (max-width: 375px) {
+  /* For mobile phones: */
+  .form{
+    .fa-calendar{
+      visibility: hidden;
+    }
+  }
+}

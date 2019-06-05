@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+import sizeMe from 'react-sizeme';
 import { renderFieldSelect, renderFieldDatePicker } from '../utils';
 import Spinner from '../../components/Spinner/index';
 import './style.scss';
@@ -21,8 +22,11 @@ const SearchCustomerForm = props => {
         invalid,
         submitting,
         pristine,
-        productTypes
+        productTypes,
+        size
     } = props;
+
+    const { width } = size;
 
     return (
         <div className="SearchCustomerForm">
@@ -31,10 +35,10 @@ const SearchCustomerForm = props => {
                     <Field name="productType" placeholder="Select..." type="text" label="Product Type" component={renderFieldSelect} options={productTypes} autocomplete="productType" />
                     <div className="category-columns">
                         <div className="category-column">
-                            <Field name="orderDateFrom" type="date" label="Order Date" placeholder="From" component={renderFieldDatePicker} autocomplete="orderDateFrom" />
+                            <Field name="orderDateFrom" type="date" label="Order Date" placeholder="From" component={renderFieldDatePicker} autocomplete="orderDateFrom" widthLayout={width} />
                         </div>
                         <div className="category-column">
-                            <Field name="orderDateTo" type="date" placeholder="To" component={renderFieldDatePicker} autocomplete="orderDateTo" />
+                            <Field name="orderDateTo" type="date" placeholder="To" component={renderFieldDatePicker} autocomplete="orderDateTo" widthLayout={width} />
                         </div>
                     </div>
                 </div>
@@ -49,7 +53,8 @@ SearchCustomerForm.propTypes = {
     invalid: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
     pristine: PropTypes.bool.isRequired,
-    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired
+    productTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    size: PropTypes.any.isRequired
 };
 
-export default reduxForm({ form: 'SearchCustomerForm', validate })(SearchCustomerForm);
+export default sizeMe()(reduxForm({ form: 'SearchCustomerForm', validate })(SearchCustomerForm));

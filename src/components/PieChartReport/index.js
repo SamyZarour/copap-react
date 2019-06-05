@@ -12,15 +12,14 @@ const renderToolTip = content => content.payload && content.payload.length > 0 &
     </div>
 );
 
-const renderLabel = total => content => {
+const renderLabel = content => {
     const {
         cx,
         cy,
         midAngle,
         innerRadius,
         outerRadius,
-        label,
-        value
+        label
     } = content;
     const RADIAN = Math.PI / 180;
     const radius = 25 + innerRadius + (outerRadius - innerRadius);
@@ -36,7 +35,7 @@ const renderLabel = total => content => {
             textAnchor={x > cx ? 'start' : 'end'}
             dominantBaseline="central"
         >
-            {`${label} : ${Math.floor(10000 * value / total) / 100}%`}
+            {label && label.substring(0, 10)}{label.length > 10 && '...'}
         </text>
     );
 };
@@ -82,7 +81,21 @@ class PieChartReport extends Component {
     }, { countries: {}, clients: {} });
 
     getDataByType(values, category, value) {
-        return this.isEmpty(values, category, value) ? [{ label: 'Placeholder', value: 1, fill: '#DDD' }] : Object.keys(values[category.value]).map((label, i) => ({ label, value: values[category.value][label][value.value], fill: getColor(i) }));
+        let dataTypes = this.isEmpty(values, category, value) ? [{ label: 'Placeholder', value: 1, fill: '#DDD' }] : Object.keys(values[category.value]).map((label, i) => ({ label, value: values[category.value][label][value.value], fill: getColor(i) }));
+
+        if (dataTypes.length > 3) {
+            const totalValue = dataTypes.reduce((acc, data) => data.value + acc, 0);
+            const reducedDataTypes = dataTypes.sort((a, b) => a.value < b.value ? 1 : -1).slice(0, 3).filter(data => data.value / totalValue > 0.05);
+            console.log(`totalValue : ${totalValue}`);
+            const reducedValue = reducedDataTypes.reduce((acc, data) => data.value + acc, 0);
+            console.log(`reducedValue: ${reducedValue}`);
+            const restValue = totalValue - reducedValue;
+            console.log(restValue);
+            reducedDataTypes.push({ label: 'Rest', value: restValue, fill: '#DDD' });
+            dataTypes = reducedDataTypes;
+        }
+
+        return dataTypes;
     }
 
     isEmpty(values, category, value) {
@@ -92,7 +105,6 @@ class PieChartReport extends Component {
     render() {
         const { values, categoryOptions, valueOptions, selectedCategory, selectedValue } = this.state;
         const data = this.getDataByType(values, selectedCategory, selectedValue);
-        const totalValue = data.reduce((acc, current) => acc + current.value, 0);
         const empty = this.isEmpty(values, selectedCategory, selectedValue);
 
         const { width } = this.props.size;
@@ -133,7 +145,7 @@ class PieChartReport extends Component {
                         cx="50%"
                         cy="50%"
                         outerRadius={pieHeight / 3}
-                        label={!empty && renderLabel(totalValue)}
+                        label={!empty && renderLabel}
                     />
                     { !empty && <Tooltip content={renderToolTip} /> }
                 </PieChart>

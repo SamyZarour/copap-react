@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+import sizeMe from 'react-sizeme';
 import { renderField, renderFieldSelect, renderFieldDatePicker } from '../utils';
 import Spinner from '../../components/Spinner/index';
 import './style.scss';
@@ -20,15 +21,15 @@ const validate = values => {
     const errors = {};
 
     if (values.valueLow && values.valueHigh && values.valueLow > values.valueHigh) {
-        errors.valueLow = 'From value must be smaller than To Value';
+        errors.valueLow = 'Invalid';
     }
 
     if (values.dueDateFrom && values.dueDateTo && new Date(values.dueDateFrom) > new Date(values.dueDateTo)) {
-        errors.dueDateFrom = 'From value must be smaller than To Value';
+        errors.dueDateFrom = 'Invalid';
     }
 
     if (values.orderDateFrom && values.orderDateTo && new Date(values.orderDateFrom) > new Date(values.orderDateTo)) {
-        errors.orderDateFrom = 'From value must be smaller than To Value';
+        errors.orderDateFrom = 'Invalid';
     }
 
     return errors;
@@ -43,8 +44,11 @@ const SearchBrandForm = props => {
         customers,
         productTypes,
         destinationCountries,
-        reset
+        reset,
+        size
     } = props;
+
+    const { width } = size;
 
     return (
         <div className="SearchBrandForm">
@@ -53,18 +57,18 @@ const SearchBrandForm = props => {
                     <Field name="productType" placeholder="Select..." type="text" label="Product Type" component={renderFieldSelect} options={productTypes} autocomplete="productType" />
                     <div className="category-columns">
                         <div className="category-column">
-                            <Field name="orderDateFrom" type="date" label="Order Date" placeholder="From" component={renderFieldDatePicker} autocomplete="orderDateFrom" />
+                            <Field name="orderDateFrom" type="date" label="Order Date" placeholder="From" component={renderFieldDatePicker} autocomplete="orderDateFrom" widthLayout={width} />
                         </div>
                         <div className="category-column">
-                            <Field name="orderDateTo" type="date" placeholder="To" component={renderFieldDatePicker} autocomplete="orderDateTo" />
+                            <Field name="orderDateTo" type="date" placeholder="To" component={renderFieldDatePicker} autocomplete="orderDateTo" widthLayout={width} />
                         </div>
                     </div>
                     <div className="category-columns">
                         <div className="category-column">
-                            <Field name="dueDateFrom" type="date" label="Due Date" placeholder="From" component={renderFieldDatePicker} autocomplete="dueDateFrom" />
+                            <Field name="dueDateFrom" type="date" label="Due Date" placeholder="From" component={renderFieldDatePicker} autocomplete="dueDateFrom" widthLayout={width} />
                         </div>
                         <div className="category-column">
-                            <Field name="dueDateTo" type="date" placeholder="To" component={renderFieldDatePicker} autocomplete="dueDateTo" />
+                            <Field name="dueDateTo" type="date" placeholder="To" component={renderFieldDatePicker} autocomplete="dueDateTo" widthLayout={width} />
                         </div>
                     </div>
                     <Field name="invoiceNumber" placeholder="Invoice Number" type="number" label="Invoice Number" component={renderField} autocomplete="invoiceNumber" />
@@ -99,7 +103,8 @@ SearchBrandForm.propTypes = {
     customers: PropTypes.arrayOf(PropTypes.object).isRequired,
     productTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
     destinationCountries: PropTypes.arrayOf(PropTypes.object).isRequired,
-    reset: PropTypes.func.isRequired
+    reset: PropTypes.func.isRequired,
+    size: PropTypes.any.isRequired
 };
 
-export default reduxForm({ form: 'SearchBrandForm', validate })(SearchBrandForm);
+export default sizeMe()(reduxForm({ form: 'SearchBrandForm', validate })(SearchBrandForm));

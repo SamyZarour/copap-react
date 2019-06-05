@@ -24,7 +24,9 @@ class BrandSearchPage extends Component {
         this.setBrand = this.setBrand.bind(this);
         this.setSearchCriteria = this.setSearchCriteria.bind(this);
         this.getNextPage = this.getNextPage.bind(this);
-        this.state = {};
+        this.state = {
+            brand: '1004'
+        };
     }
 
     componentWillMount() {
