@@ -31,7 +31,7 @@ class ReportPage extends Component {
         if (isAdmin) {
             initSearch({ traders: true });
         } else {
-            fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: username, isPaged: false, reset: true });
+            fetchInvoices({ invoiceDateFrom: getDateRange(range.value), userId: username, isPaged: false, reset: true });
         }
     }
 
@@ -43,7 +43,7 @@ class ReportPage extends Component {
         const userId = isAdmin ? traderValue : username;
 
         if (userId) {
-            fetchInvoices({ orderDateFrom: getDateRange(range.value), userId, isPaged: false, reset: true });
+            fetchInvoices({ invoiceDateFrom: getDateRange(range.value), userId, isPaged: false, reset: true });
         }
 
         this.setState({ range });
@@ -53,7 +53,7 @@ class ReportPage extends Component {
         const { range } = this.state;
         const { fetchInvoices } = this.props;
 
-        fetchInvoices({ orderDateFrom: getDateRange(range.value), userId: trader.value, isPaged: false, reset: true });
+        fetchInvoices({ invoiceDateFrom: getDateRange(range.value), userId: trader.value, isPaged: false, reset: true });
         this.setState({ trader });
     }
 
@@ -82,7 +82,7 @@ class ReportPage extends Component {
                             placeholder="Select Agent..."
                             onChange={this.setTrader}
                             value={trader}
-                            options={traders}
+                            options={[{ label: 'All', value: null }, ...traders]}
                             styles={({
                                 control: provided => ({ ...provided, 'font-size': '14px' }),
                                 option: provided => ({ ...provided, 'font-size': '14px' })
