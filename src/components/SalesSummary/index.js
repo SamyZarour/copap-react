@@ -4,15 +4,16 @@ import { formatNumber } from '../../utils';
 import './style.scss';
 
 const getSalesSummaryValues = invoices => invoices.reduce((acc, current) => {
-    const { ShippingDate, CompletedDate, TotalSale } = current;
+    const { ShippingDate, DeliveryDate, InvoiceDate, TotalSale } = current;
 
     const isShipped = new Date(ShippingDate) < new Date();
-    const isPaid = new Date(CompletedDate) < new Date();
+    const isDelivered = new Date(DeliveryDate) < new Date();
+    const isPaid = !!InvoiceDate;
 
     return {
         shipped: isShipped ? acc.shipped + 1 : acc.shipped,
         notShipped: !isShipped ? acc.notShipped + 1 : acc.notShipped,
-        shippedNotPaid: (isShipped && !isPaid) ? acc.shippedNotPaid + 1 : acc.shippedNotPaid,
+        shippedNotPaid: (isShipped && !isDelivered) ? acc.shippedNotPaid + 1 : acc.shippedNotPaid,
         sales: isShipped ? acc.sales + TotalSale : acc.sales,
         purchases: !isShipped ? acc.purchases + TotalSale : acc.purchases,
         arSummary: (isShipped && !isPaid) ? acc.arSummary + TotalSale : acc.arSummary

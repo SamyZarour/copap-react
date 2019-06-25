@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
 
@@ -151,8 +152,11 @@ export const renderFieldDatePicker = config => {
         <div className="field">
             { label && <label className="field-label">{isRequired && <span className="required-indicator">*</span>}{label}</label> }
             <div className="field-date-picker">
+                { console.log(input.value)}
+                { console.log(typeof input.value) }
                 <DatePicker
                     {...input}
+                    value={input.value && moment(input.value).format('YYYY-MM-DD')}
                     onChangeRaw={input.onChange}
                     dateForm="MM/DD/YYYY"
                     selected={input.value ? new Date(input.value) : null}
