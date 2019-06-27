@@ -38,7 +38,8 @@ class SalesPage extends Component {
         const { user: { role, username }, fetchInvoices } = this.props;
         const { trader } = this.state;
         const isAdmin = role === 'admin';
-        const userId = isAdmin ? trader : username;
+        const traderValue = trader ? trader.value : null;
+        const userId = isAdmin ? traderValue : username;
 
         if (userId) {
             fetchInvoices({ invoiceDateFrom: getDateRange(range.value), userId, isPaged: false, reset: true });
