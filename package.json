@@ -40,7 +40,7 @@
     "jest": "20.0.4",
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
-    "mongodb": "^3.1.4",
+    "mongodb": "^3.1.13",
     "node-sass": "^4.12.0",
     "object-assign": "4.1.1",
     "popper": "^1.0.1",
