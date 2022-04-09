@@ -39,7 +39,7 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "jquery": "^3.3.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mongodb": "^3.1.4",
     "node-sass": "^4.12.0",
     "object-assign": "4.1.1",
